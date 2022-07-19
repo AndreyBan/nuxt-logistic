@@ -1,0 +1,67 @@
+@import "../../variables.scss";
+
+.form-radio {
+  input {
+    display: none;
+
+    &:checked + label{
+      &:before{
+        border: 1px solid scotch-color('primary');
+      }
+
+      &:after{
+      content: '';
+      position: absolute;
+      left: 7px;
+      margin-top: 4px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: scotch-color('primary');
+    }
+    }
+  }
+
+  label {
+    position: relative;
+    padding-left: 32px;
+    cursor: pointer;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      margin-top: -3px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 1px solid #CCC;
+      transition-duration: .2s;
+    }
+
+    &:hover:before{
+      border: 1px solid scotch-color('primary');
+    }
+  }
+}
+
+.form-radio.bg-dark{
+  input:checked + label{
+    &:before{
+      border: 1px solid scotch-color('primary');
+    }
+    &:after{
+      background-color: scotch-color('primary');
+    }
+  }
+
+  label {
+    color: scotch-color('white');
+    &:before{
+      border: 1px solid scotch-color('white');
+    }
+    &:hover:before{
+      border: 1px solid scotch-color('primary');
+    }
+  }
+}

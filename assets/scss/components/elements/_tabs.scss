@@ -1,0 +1,23 @@
+@import "../../variables.scss";
+
+.c-tabs-list{
+  list-style: none;
+  font-size: 16px;
+  font-weight: 600;
+
+  li{
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    padding-bottom: 4px;
+
+    &:not(:last-child){
+      margin-right: 28px;
+    }
+
+    &.active{
+      border-bottom: 5px solid scotch-color('accent');
+
+    }
+  }
+}

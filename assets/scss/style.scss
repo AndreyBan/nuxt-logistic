@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+@import "variables";
+@import "components/elements/btns";
+@import "components/elements/checkbox";
+@import "components/elements/form-elements";
+@import "components/elements/links";
+@import "components/elements/radio-button";
+@import "components/elements/tabs";
+@import "components/elements/toggle-switch";
+
+*{
+  box-sizing: border-box;
+}
+html, body{
+  height: 100%;
+}
+body{
+  margin: 0;
+  padding: 153px 0 0 0;
+  font-family: $font;
+  font-size: $fontSize;
+}
+ul, p {
+  padding: 0;
+  margin: 0;
+}
+main {
+  flex: 1 0 auto;
+}
+.container {
+  width: 100%;
+  max-width: $widthXL;
+  margin: 0 auto;
+  padding: 0 var(--padding-container);
+}
+.vs__search, .vs__search:focus {
+  font-family: $font;
+  font-size: 14px;
+  font-weight: 400;
+  pointer-events: none;
+  padding: 0 16px;
+}
+
+@media screen and (max-width: 991px) {
+  body {
+    padding-top: 99px;
+  }
+}

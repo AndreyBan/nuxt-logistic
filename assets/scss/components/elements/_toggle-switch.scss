@@ -1,0 +1,88 @@
+@import "../../variables.scss";
+
+.form-toggle-switch {
+  input {
+    display: none;
+
+    &:checked + label {
+      &:before {
+        border: 1px solid #C4C4C4;
+        background-color: scotch-color('primary');
+      }
+
+      &:after {
+        left: 22px;
+        background-color: scotch-color('white');
+      }
+
+      &:hover:after {
+        background-color: scotch-color('white');
+      }
+    }
+  }
+
+  label {
+    position: relative;
+    padding-left: 56px;
+    cursor: pointer;
+
+    &:before {
+      content: '';
+      position: absolute;
+      left: 0;
+      margin-top: -4px;
+      width: 44px;
+      height: 24px;
+      border-radius: 100px;
+      border: 1px solid #C4C4C4;
+      transition-duration: .2s;
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      left: 2px;
+      margin-top: -2px;
+      width: 22px;
+      height: 22px;
+      background-color: #CCCCCC;
+      border-radius: 50%;
+      transition-timing-function: ease-in;
+      transition-duration: .2s;
+    }
+
+    &:hover:after {
+      background-color: scotch-color('primary');
+    }
+  }
+}
+
+.form-toggle-switch.bg-dark {
+
+  input:checked {
+    & + label {
+      &:after{
+        background-color: scotch-color('white');
+      }
+      &:before {
+        border: 1px solid scotch-color('primary');
+      }
+    }
+  }
+
+  label {
+    color: scotch-color('white');
+
+    &:before {
+      border: 1px solid scotch-color('white');
+    }
+
+    &:after {
+      background-color: scotch-color('white');
+    }
+
+    &:hover:after {
+      background-color: scotch-color('primary');
+    }
+  }
+}

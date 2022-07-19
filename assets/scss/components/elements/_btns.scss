@@ -1,0 +1,76 @@
+@import "../../variables.scss";
+
+
+.btn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 160px;
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 50px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 14px;
+  position: relative;
+
+  &--w-auto{
+    width: auto;
+  }
+}
+
+.loaded .btn{
+  transition-duration: .2s;
+}
+
+.btn.btn--primary {
+  background-color: $btnPrimaryBg;
+  color: $btnPrimaryText;
+  transition-duration: .2s;
+  cursor: pointer;
+  border: 1px solid $btnPrimaryBg;
+
+  &:hover{
+    background-color: $btnPrimaryBgHover;
+    border: 1px solid $btnPrimaryBgHover;
+  }
+}
+
+.btn.btn--secondary {
+  background-color: $btnSecondaryBg;
+  color: $btnSecondaryText;
+  border: 1px solid $btnSecondaryBorder;
+  transition-duration: .2s;
+  cursor: pointer;
+
+  &:hover{
+    color: $btnSecondaryHoverText;
+    background-color: $btnSecondaryBgHover;
+    border: 1px solid $btnSecondaryBgHover;
+  }
+}
+
+.btn--arrow-right:after {
+  content: '';
+  display: inline-block;
+  vertical-align: bottom;
+  width: 14px;
+  height: 15px;
+  margin-top: 3px;
+  margin-left: 12px;
+  background: $btnArrowWhite;
+}
+
+.btn--secondary.btn--arrow-right:after {
+  background: $btnArrowRed;
+}
+
+.btn--secondary.btn--arrow-right:hover:after{
+  background: $btnArrowWhite;
+}
+@media only screen and (max-width: 767px){
+  .btn--w-auto {
+    width: 100%;
+  }
+}

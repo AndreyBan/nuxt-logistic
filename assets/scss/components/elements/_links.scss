@@ -1,0 +1,32 @@
+$colorLink: #000;
+$colorLinkActive: #ED1C24;
+$colorLinkHover: #878787;
+$colorLinkLight: #DEDEDE;
+$colorLinkLightHover: #FFF;
+
+a {
+  color: $colorLink;
+  text-decoration: underline;
+
+  &:hover {
+    color: $colorLinkHover;
+  }
+
+  &:active {
+    color: $colorLinkActive;
+  }
+}
+
+a.link-light {
+  color: $colorLinkLight;
+  text-decoration: none;
+
+  &:hover {
+    color: $colorLinkLightHover;
+    text-decoration: none;
+  }
+
+  &:active {
+    text-decoration: underline;
+  }
+}

@@ -1,0 +1,151 @@
+$colorBorder: #CCCCCC;
+$colorBorderHover: #878787;
+$colorError: #F90F0F;
+
+.vs__actions:before {
+  content: "";
+  position: absolute;
+  width: 14px;
+  height: 10px;
+  right: 16px;
+  background: url('/img/svg/arrow-down.svg') 50% 50% no-repeat;
+  transition-duration: .35s;
+}
+.vs--open .vs__actions:before {
+  transform: rotate(180deg);
+}
+.vs__search{
+  transition-duration: .2s;
+  &::placeholder {
+    transition-duration: .2s;
+  }
+}
+.vs--open .vs__search {
+  transform: translateY(-30px);
+  &::placeholder {
+    font-size: 0.875em;
+    color: #CCCCCC;
+  }
+}
+.vs__open-indicator {
+  display: none;
+}
+.vs__dropdown-menu{
+  border-top: none;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  box-shadow: none;
+  text-align: left;
+}
+.vs__open-indicator{
+  stroke-width: 10px;
+}
+.vs__dropdown-option {
+  height: auto;
+  line-height: 18px;
+  word-wrap: break-word;
+  white-space: normal;
+  border-top: 1px solid $colorBorder;
+  padding: 6px 8px;
+}
+.vs__dropdown-toggle{
+  border: 1px solid $colorBorder;
+  border-radius: 25px;
+  height: 40px;
+}
+
+.form-field {
+  position: relative;
+  font-size: 1em;
+
+  label {
+    position: absolute;
+    left: 16px;
+    top: 12px;
+    pointer-events: none;
+    transition-duration: .2s;
+  }
+  input, select {
+    border-radius: 25px;
+  }
+  input, textarea {
+    border: 1px solid $colorBorder;
+    padding: 12px 16px;
+    width: 100%;
+    outline: none;
+
+    &:hover {
+      border: 1px solid $colorBorderHover;
+    }
+    &::placeholder{
+      opacity: 0;
+    }
+    &:active, &:focus, &.valid{
+      &::placeholder{
+        opacity: 1;
+      }
+      & + label {
+        font-size: .875em;
+        margin-top: -30px;
+        color: #CCCCCC;
+      }
+    }
+
+    &:invalid{
+      border: 1px solid $colorError;
+
+      & + label + .error-text{
+        display: block;
+      }
+    }
+  }
+
+  textarea {
+    resize: none;
+    border-radius: 9px;
+  }
+}
+
+.loaded {
+  input, label {
+    transition-duration: .2s;
+  }
+}
+
+.error-text {
+  color: $colorError;
+  display: none;
+  position: absolute;
+  left: 16px;
+  bottom: -4px;
+}
+
+.has-error {
+  .error-text {
+    display: block;
+  }
+
+  input {
+    border: 1px solid $colorError;
+  }
+}
+
+.bg-dark{
+  label{
+    color: #000;
+  }
+
+  input, textarea{
+    &:active, &:focus, &.valid{
+      & + label {
+        color: #FFF;
+      }
+    }
+    &:focus{
+      border: 1px solid transparent;
+      outline: 2px solid #F1A94B;
+    }
+  }
+}
+
+
