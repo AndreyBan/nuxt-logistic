@@ -17,7 +17,7 @@
       :class="{'valid': checkEmpty}"
       @input="$emit('input', $event.target.value)"
     />
-    <label for="name">{{ labelText }}</label>
+    <label>{{ fieldLabel }} <span v-if="fieldRequire">*</span></label>
     <span class="error-text">{{ fieldError }}</span>
   </div>
 </template>
@@ -43,11 +43,14 @@ export default {
     typeTextarea: {
       type: Boolean,
       default: false
+    },
+    fieldRequire: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
-      labelText: this.fieldLabel,
       value: this.fieldValue
     }
   },

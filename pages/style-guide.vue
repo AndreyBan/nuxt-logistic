@@ -215,14 +215,8 @@
       <h2 class="e-mb">
         Checkbox
       </h2>
-      <div class="form-checkbox">
-        <input id="check-1" type="checkbox">
-        <label for="check-1">Checkbox</label>
-      </div>
-      <div class="form-checkbox bg-dark b-mt">
-        <input id="check-2" type="checkbox">
-        <label for="check-2">Checkbox</label>
-      </div>
+      <CheckboxComponent id="check-1" label="Check 1" />
+      <CheckboxComponent id="check-2" label="Check 2" class="bg-dark b-mt" />
     </div>
     <div class="block">
       <h2 class="e-mb">
@@ -257,12 +251,14 @@
 <script>
 import FormField from '@/components/style-guide/FormField'
 import TabsComponent from '@/components/style-guide/TabsComponent'
+import CheckboxComponent from '@/components/style-guide/CheckboxComponent'
 
 export default {
   name: 'StyleGuide',
   components: {
     FormField,
-    TabsComponent
+    TabsComponent,
+    CheckboxComponent
   },
   data () {
     return {

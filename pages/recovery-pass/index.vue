@@ -10,9 +10,6 @@
             :searchable="false"
             class="select-dealers"
           >
-            <template #selection>
-              <label for="f-form">Форма собственности*</label>
-            </template>
             <template #no-options>
               Ничего не найдено
             </template>
