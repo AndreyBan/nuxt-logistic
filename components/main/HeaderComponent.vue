@@ -4,11 +4,11 @@
       <div class="header-top">
         <div class="container">
           <div class="header-top-grid">
-            <div class="header-logo">
+            <nuxt-link to="/" class="header-logo">
               <img v-lazy-load data-src="/img/svg/logo.svg" alt="logo">
               <span class="header-logo__separate" />
               <span class="header-logo__text">Логистический<br>портал ГК АГАТ</span>
-            </div>
+            </nuxt-link>
             <LoginLink :modal-show="modalShow" @modal-open="modalShow = true" />
           </div>
         </div>
@@ -71,6 +71,10 @@ export default {
 .header-logo {
   display: flex;
   align-items: center;
+  text-decoration: none;
+  &:hover {
+    color: #000;
+  }
 }
 
 .header-logo__separate {

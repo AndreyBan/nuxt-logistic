@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
-@import "variables";
+//@import "variables";
 @import "components/elements/btns";
 //@import "components/elements/checkbox";
 @import "components/elements/form-elements";
@@ -40,7 +40,9 @@ main {
   pointer-events: none;
   padding: 0 16px;
 }
-
+.vs__clear{
+  margin-right: 28px;
+}
 @media screen and (max-width: 991px) {
   body {
     padding-top: 99px;

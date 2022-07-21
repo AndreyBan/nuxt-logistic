@@ -1,13 +1,18 @@
 <template>
   <div class="form-field">
     <input
-      v-if="!typeTextarea"
+      v-if="!typeTextarea && !typePhone"
       v-model="value"
       v-bind="$attrs"
       autocomplete="off"
       pattern="([А-Яа-яЁё]+)"
       :class="{'valid': checkEmpty}"
       @input="$emit('input', $event.target.value)"
+    >
+    <input
+      v-else-if="typePhone"
+      v-mask="{mask: '+7(999) 999-99-99', showMaskOnHover: false}"
+      inputmode="numeric"
     >
     <textarea
       v-else
@@ -41,6 +46,10 @@ export default {
       default: ''
     },
     typeTextarea: {
+      type: Boolean,
+      default: false
+    },
+    typePhone: {
       type: Boolean,
       default: false
     },

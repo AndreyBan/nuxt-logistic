@@ -6,7 +6,9 @@
         <a href="#" class="btn btn--primary">Войти</a>
       </div>
       <div>
-        <a href="#" class="btn btn--secondary">Зарегистрироваться</a>
+        <NuxtLink to="/registration/" class="btn btn--secondary">
+          Зарегистрироваться
+        </NuxtLink>
       </div>
     </div>
   </div>

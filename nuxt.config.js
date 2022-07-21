@@ -21,22 +21,26 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     'vue-select/dist/vue-select.css',
-    'assets/scss/style.scss'
+    '@/assets/scss/style.scss'
   ],
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/vSelect.js' }
+    { src: '~/plugins/vSelect.js' },
+    { src: '~/plugins/vueInputMask.js' }
   ],
-
+  styleResources: {
+    scss: ['@/assets/scss/variables.scss'],
+    hoistUseStatements: true
+  },
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: false,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
+    '@nuxtjs/style-resources',
     '@nuxtjs/eslint-module'
   ],
-
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios

@@ -1,7 +1,8 @@
 <template>
   <div class="form-checkbox">
-    <input :id="id" type="checkbox">
+    <input :id="id" type="checkbox" :checked="!!checked">
     <label :for="id">{{ label }}</label>
+    <a v-if="!!link" :href="link.url"> {{ link.name }}</a>
   </div>
 </template>
 
@@ -16,22 +17,35 @@ export default {
     label: {
       type: String,
       default: 'check'
+    },
+    link: {
+      type: Object,
+      default () {
+        return {
+          name: '',
+          url: '#'
+        }
+      }
+    },
+    checked: {
+      type: String,
+      default: ''
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-@import "/assets/scss/variables";
 
 .form-checkbox {
   input {
     display: none;
 
-     &+ label:after {
+    & + label:after {
       content: '';
       position: absolute;
       left: 5px;
+      //margin-top: 3px;
       top: 3px;
       width: 12px;
       height: 9px;
@@ -55,9 +69,16 @@ export default {
   }
 
   label {
+    display: inline-block;
     position: relative;
     padding-left: 32px;
     cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
     &:before {
       content: '';
@@ -82,4 +103,11 @@ export default {
   }
 }
 
+.form-checkbox a {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
 </style>

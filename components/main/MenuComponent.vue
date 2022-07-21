@@ -50,7 +50,6 @@ export default {
 }
 </style>
 <style scoped lang="scss">
-@import "assets/scss/variables";
 
 .menu-header .header-login{
   display: none;

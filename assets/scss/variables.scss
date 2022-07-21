@@ -4,9 +4,7 @@ $widthXL: 1272px;
 .container {
   --padding-container: 26px;
 }
-@media screen and (max-width: 1024px){
-  $test: 40px
-}
+
 /**** Buttons ****/
 
 // Primary button
@@ -157,6 +155,9 @@ $main-colors: (
   :root {
     --block-margin: 32px;
     --section-margin: 48px;
+  }
+  .container {
+    --padding-container: 24px;
   }
 }
 
