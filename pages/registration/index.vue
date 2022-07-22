@@ -7,6 +7,7 @@
           <div class="v-select-form">
             <v-select
               id="f-form"
+              v-model="fields.mainData.formOwnership"
               placeholder="Форма собственности*"
               :searchable="false"
               :options="typeOwnership"
@@ -24,13 +25,15 @@
             field-label="Наименование юр лица/ип"
             :field-require="true"
           />
-          <FormField
-            id="f-inn"
-            name="inn"
-            type="text"
-            field-label="ИНН"
-            :field-require="true"
-          />
+          <!--          <FormField-->
+          <!--            id="f-inn"-->
+          <!--            name="inn"-->
+          <!--            type="text"-->
+          <!--            field-label="ИНН"-->
+          <!--            :field-require="true"-->
+          <!--            @emit-input="getFieldValue($event, 'fields.mainData.INN')"-->
+          <!--          />-->
+          <inn-field />
         </div>
         <p class="title-text">
           <b>Специализация компании</b>
@@ -146,6 +149,7 @@
             type="text"
             field-label="ФИО подписанта договора"
             :field-require="true"
+            @emit-input="getFieldValue($event, 'nameTest')"
           />
           <input-file />
           <div class="check-column">
@@ -154,6 +158,7 @@
               label="Даю согласие на "
               :link="{name: 'обработку персональных данных', url: '#'}"
               checked="checked"
+              class="e-mb"
             />
             <CheckboxComponent
               id="check-rules"
@@ -172,17 +177,21 @@
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import FormField from '@/components/style-guide/FormField'
 import CheckboxComponent from '@/components/style-guide/CheckboxComponent'
 import inputFile from '@/components/style-guide/InputFile'
-
+import innField from '@/components/fields/InnField'
 export default {
   name: 'RegistrationPage',
   components: {
     FormField,
     CheckboxComponent,
-    inputFile
+    inputFile,
+    innField
   },
+  mixins: [validationMixin],
   data () {
     return {
       dataCheck: {
@@ -193,12 +202,48 @@ export default {
         pallet: 'Паллетированные грузы',
         danger: 'Опасные грузы'
       },
-      typeOwnership: ['Юр. лицо', 'ИП']
+      typeOwnership: ['Юр. лицо', 'ИП'],
+      fields: {
+        mainData: {
+          formOwnership: '',
+          nameOrganize: '',
+          INN: ''
+        },
+        bank: {
+          kpp: '',
+          rs: '',
+          bankName: '',
+          ks: '',
+          BIK: '',
+          OGRN: '',
+          OKPO: '',
+          organizeFIO: ''
+        }
+      }
+    }
+  },
+  validations: {
+    fields: {
+      mainData: {
+        formOwnership: { required },
+        nameOrganize: { required },
+        INN: { required, minLength: minLength(10), maxLength: maxLength(10) }
+      },
+      bank: {
+        kpp: '',
+        rs: '',
+        bankName: '',
+        ks: '',
+        BIK: '',
+        OGRN: '',
+        OKPO: '',
+        organizeFIO: ''
+      }
     }
   },
   methods: {
     formSubmit () {
-      console.log('form submit')
+      return false
     }
   }
 }
@@ -234,12 +279,6 @@ export default {
 .btn--w-auto {
   width: 189px;
   justify-self: flex-end;
-}
-
-.check-column {
-  display: grid;
-  grid-template: 1fr 1fr / 1fr;
-  row-gap: 14px;
 }
 
 @media screen and (max-width: 991px) {

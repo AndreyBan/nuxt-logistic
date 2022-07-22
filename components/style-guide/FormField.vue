@@ -5,10 +5,10 @@
       v-model="value"
       v-bind="$attrs"
       autocomplete="off"
-      pattern="([А-Яа-яЁё]+)"
-      @blur="getError"
+      :pattern="checkPattern ? checkPattern : false"
       :class="{'valid': checkEmpty, 'error': eventBlur}"
-      @input="$emit('input', $event.target.value)"
+      @blur="getError"
+      @input="$emit('emit-input', $event.target.value)"
     >
     <input
       v-else-if="typePhone"
@@ -40,7 +40,7 @@ export default {
     },
     fieldError: {
       type: String,
-      default: 'Ошибочка вышла'
+      default: 'Неверный формат'
     },
     fieldValue: {
       type: String,
@@ -57,6 +57,10 @@ export default {
     fieldRequire: {
       type: Boolean,
       default: false
+    },
+    checkPattern: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -74,7 +78,7 @@ export default {
   methods: {
     getError () {
       this.eventBlur = !this.checkEmpty && this.fieldRequire
-      this.errorText = !this.checkEmpty && this.fieldRequire ? 'Заполните поле' : 'Некорректный формат'
+      this.errorText = !this.checkEmpty && this.fieldRequire ? 'Заполните поле' : this.fieldError
     }
   }
 }
