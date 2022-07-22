@@ -3,7 +3,9 @@
     <h3>Вход или регистрация</h3>
     <div class="popup-auth-buttons">
       <div class="e-big-mt e-big-mb">
-        <a href="#" class="btn btn--primary">Войти</a>
+        <NuxtLink to="/authorization/" class="btn btn--primary">
+          Войти
+        </NuxtLink>
       </div>
       <div>
         <NuxtLink to="/registration/" class="btn btn--secondary">

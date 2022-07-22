@@ -91,7 +91,8 @@ $colorError: #F90F0F;
       }
     }
 
-    &:invalid{
+    &:invalid,
+    &.error{
       border: 1px solid $colorError;
 
       & + label + .error-text{

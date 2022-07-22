@@ -6,7 +6,8 @@
       v-bind="$attrs"
       autocomplete="off"
       pattern="([А-Яа-яЁё]+)"
-      :class="{'valid': checkEmpty}"
+      @blur="getError"
+      :class="{'valid': checkEmpty, 'error': eventBlur}"
       @input="$emit('input', $event.target.value)"
     >
     <input
@@ -23,7 +24,7 @@
       @input="$emit('input', $event.target.value)"
     />
     <label>{{ fieldLabel }} <span v-if="fieldRequire">*</span></label>
-    <span class="error-text">{{ fieldError }}</span>
+    <span class="error-text">{{ errorText }}</span>
   </div>
 </template>
 
@@ -60,12 +61,20 @@ export default {
   },
   data () {
     return {
-      value: this.fieldValue
+      value: this.fieldValue,
+      eventBlur: false,
+      errorText: this.fieldError
     }
   },
   computed: {
     checkEmpty () {
       return !!this.value
+    }
+  },
+  methods: {
+    getError () {
+      this.eventBlur = !this.checkEmpty && this.fieldRequire
+      this.errorText = !this.checkEmpty && this.fieldRequire ? 'Заполните поле' : 'Некорректный формат'
     }
   }
 }

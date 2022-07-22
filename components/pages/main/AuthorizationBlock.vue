@@ -5,7 +5,9 @@
       <p class="auth-block__subtitle b-mt b-mb">
         Добро пожаловать на специализированную площадку Транспортной компании “АГАТ-Логистик”
       </p>
-      <a href="#" class="btn btn--primary btn--w-auto e-big-mr">Войти</a>
+      <NuxtLink to="/authorization/" class="btn btn--primary btn--w-auto e-big-mr">
+        Войти
+      </NuxtLink>
       <NuxtLink to="/registration/" class="btn btn--secondary btn--w-auto">
         Зарегистрироваться
       </NuxtLink>

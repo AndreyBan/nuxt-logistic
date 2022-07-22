@@ -19,24 +19,24 @@ export default {
     this.disableOverFlow('hidden')
     const overClick = (e) => {
       if (getComputedStyle(this.$refs.modal).opacity === '1') {
-        const $this = e.target.classList
-        if (!['modal-window', 'modal-wrap', 'c-modal-content'].includes($this)) {
+        if (e.target.classList.contains('modal-window') || e.target.classList.contains('btn')) {
           document.removeEventListener('click', overClick)
           this.closeModal()
         }
       }
     }
-    document.addEventListener('click', overClick)
+    document.querySelector('.modal-window').addEventListener('click', overClick)
   },
   destroyed () {
     this.disableOverFlow('auto')
   },
   methods: {
     disableOverFlow (str) {
-      document.querySelector('body').style.overflow = str
       if (matchMedia('(min-width: 1025px)').matches) {
-        const $html = document.querySelector('html')
-        $html.style.marginRight = str === 'hidden' ? '17px' : '0'
+        const margin = str === 'hidden' ? '17px' : '0'
+        document.querySelector('body').style.overflow = str
+        document.querySelector('html').style.marginRight = margin
+        document.querySelector('.main-header').style.paddingRight = margin
       }
     },
     closeModal () {
