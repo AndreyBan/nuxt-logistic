@@ -4,25 +4,21 @@
       <h1>Авторизация</h1>
       <div class="fields-grid b-mt">
         <FormField
-          id="f-login"
-          name="login"
           type="text"
-          field-label="Логин*"
-          data-required
+          field-label="Логин"
+          :required="true"
         />
         <FormField
-          id="f-password"
-          name="password"
           type="password"
-          field-label="Пароль*"
-          data-required
+          field-label="Пароль"
+          :required="true"
         />
         <button class="btn btn--primary btn--w-auto">
           Войти
         </button>
-        <a href="#" class="btn btn--secondary btn--w-auto">
+        <NuxtLink to="/recovery-pass/" class="btn btn--secondary btn--w-auto">
           Забыли пароль
-        </a>
+        </NuxtLink>
       </div>
     </div>
     <div class="bottom-img e-big-mt" />
@@ -30,7 +26,7 @@
 </template>
 
 <script>
-import FormField from '@/components/style-guide/FormField'
+import FormField from '@/components/fields/FormField'
 
 export default {
   name: 'RecoveryPass',

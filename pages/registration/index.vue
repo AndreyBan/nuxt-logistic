@@ -19,12 +19,9 @@
             </v-select>
           </div>
           <FormField
-            id="f-name"
-            name="name"
             type="text"
             field-label="Наименование юр лица/ип"
             :required="true"
-            validate-language="Cyrillic"
           />
           <NumField
             mask-template="##########"
@@ -36,8 +33,17 @@
           <b>Специализация компании</b>
         </p>
         <p>Выберите из представленного списка специализацию, к которой относится Ваша компания</p>
-        <div class="checkbox-grid e-big-mt s-mb">
-          <CheckboxComponent v-for="(el, i) in dataCheck" :id="'check-' + i" :key="i" :label="el" />
+        <div ref="block-checkboxes" class="checkbox-grid e-big-mt s-mb">
+          <CheckboxComponent
+            v-for="(el, i) in dataCheck"
+            :id="i"
+            :key="i"
+            :label="el"
+            @get-value="getValue"
+          />
+          <p v-show="errorEmptyCheckboxes" class="error-empty-checkboxes">
+            *Необходимо выбрать минимум одну специализацию
+          </p>
         </div>
         <div class="fields-grid b-mt">
           <NumField
@@ -84,11 +90,11 @@
             :min-length="fields.mainData.formOwnership !== 'ИП' ? 8 : 10"
           />
           <FormField
-            id="f-fio"
-            name="fio"
             type="text"
             field-label="ФИО Директора организации"
-            :require="true"
+            validate-language="Cyrillic"
+            :validate-number="true"
+            :required="true"
           />
         </div>
         <div class="fields-grid fields-grid--md-bottom-full b-mt">
@@ -119,14 +125,17 @@
           <FormField
             type="text"
             field-label="Адрес электронной почты"
+            validate-language="latin"
             :required="true"
           />
           <FormField
             type="text"
             field-label="ФИО подписанта договора"
+            validate-language="Cyrillic"
+            :validate-number="true"
             :required="true"
           />
-          <input-file />
+          <InputFile />
           <div class="check-column">
             <CheckboxComponent
               id="check-agree"
@@ -153,9 +162,9 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
-import FormField from '@/components/style-guide/FormField'
+import FormField from '@/components/fields/FormField'
 import CheckboxComponent from '@/components/style-guide/CheckboxComponent'
-import inputFile from '@/components/style-guide/InputFile'
+import InputFile from '@/components/fields/InputFile'
 import NumField from '@/components/fields/NumField'
 import PhoneField from '@/components/fields/PhoneField'
 
@@ -164,7 +173,7 @@ export default {
   components: {
     FormField,
     CheckboxComponent,
-    inputFile,
+    InputFile,
     NumField,
     PhoneField
   },
@@ -186,6 +195,14 @@ export default {
           nameOrganize: '',
           INN: ''
         },
+        checkSpecs: {
+          car: '',
+          spec: '',
+          cargo: '',
+          products: '',
+          pallet: '',
+          danger: ''
+        },
         bank: {
           kpp: '',
           rs: '',
@@ -196,12 +213,50 @@ export default {
           OKPO: '',
           organizeFIO: ''
         }
-      }
+      },
+      errorEmptyCheckboxes: false
     }
   },
   methods: {
+    /**
+     * Отправка формы
+     * @returns {boolean}
+     */
     formSubmit () {
+      this.checkSpecs()
       return false
+    },
+    /**
+     * Проверка на выбранную специализацию
+     * @param scroll {Boolean}
+     */
+    checkSpecs (scroll = true) {
+      let emptyCheckboxes = true
+      const checkGroup = this.fields.checkSpecs
+      for (const v in checkGroup) {
+        if (checkGroup[v]) {
+          emptyCheckboxes = false
+        }
+      }
+      // Показываем ошибку, что не заполненна ни одна специализация
+      this.errorEmptyCheckboxes = emptyCheckboxes
+      // Скролл к блоку специализаций для случая когда пытаются отправить форму не выбрав ни одной специализации
+      if (emptyCheckboxes && scroll) {
+        this.$refs['block-checkboxes'].scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'
+        })
+      }
+    },
+    /**
+     * Получение значения чекбокса
+     * @param e
+     */
+    getValue (e) {
+      this.errorEmptyCheckboxes = false
+      const key = Object.keys(e)[0]
+      this.fields.checkSpecs[key] = e[key]
+      this.checkSpecs(false)
     }
   }
 }
@@ -232,11 +287,18 @@ export default {
 .checkbox-grid {
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 
 .btn--w-auto {
   width: 189px;
   justify-self: flex-end;
+}
+.error-empty-checkboxes {
+  color: scotch-color('primary');
+  position: absolute;
+  bottom: -32px;
+  left: 0;
 }
 
 @media screen and (max-width: 991px) {

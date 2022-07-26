@@ -3,11 +3,13 @@
     <div class="container">
       <h1>Восстановление пароля</h1>
       <div class="fields-grid b-mt">
-        <div>
+        <div class="v-select-form">
           <v-select
             id="f-form"
+            v-model="fields.mainData.formOwnership"
             placeholder="Форма собственности*"
             :searchable="false"
+            :options="typeOwnership"
             class="select-dealers"
           >
             <template #no-options>
@@ -16,30 +18,26 @@
           </v-select>
         </div>
         <FormField
-          id="f-name"
-          name="name"
           type="text"
-          field-label="Наименование юр лица/ип*"
-          data-required
+          field-label="Наименование юр лица/ип"
+          :required="true"
+        />
+        <NumField
+          mask-template="##########"
+          label="ИНН"
+          :required="true"
+        />
+        <NumField
+          mask-template="#########"
+          label="КПП"
+          :required="fields.mainData.formOwnership === 'Юр. лицо'"
+          :min-length="9"
         />
         <FormField
-          id="f-inn"
-          name="inn"
           type="text"
-          field-label="ИНН*"
-          data-required
-        />
-        <FormField
-          id="f-kpp"
-          name="kpp"
-          type="text"
-          field-label="КПП"
-        />
-        <FormField
-          id="f-mail"
-          name="mail"
-          type="mail"
-          field-label="Адрес электронной почты*"
+          field-label="Адрес электронной почты"
+          validate-language="latin"
+          :required="true"
         />
         <button class="btn btn--primary btn--w-auto">
           Восстановить доступ
@@ -51,14 +49,27 @@
 </template>
 
 <script>
-import FormField from '@/components/style-guide/FormField'
+import FormField from '@/components/fields/FormField'
+import NumField from '@/components/fields/NumField'
 
 export default {
   name: 'RecoveryPass',
   components: {
-    FormField
+    FormField,
+    NumField
+  },
+  data () {
+    return {
+      typeOwnership: ['Юр. лицо', 'ИП'],
+      fields: {
+        mainData: {
+          formOwnership: '',
+          nameOrganize: '',
+          INN: ''
+        }
+      }
+    }
   }
-
 }
 </script>
 

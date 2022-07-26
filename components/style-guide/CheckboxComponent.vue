@@ -1,8 +1,8 @@
 <template>
   <div class="form-checkbox">
-    <input :id="id" type="checkbox" :checked="!!checked">
+    <input :id="id" v-model="checkValue" type="checkbox" :checked="!!checked" @change="$emit('get-value', {[id]: checkValue ? label: ''})">
     <label :for="id">{{ label }}</label>
-    <a v-if="!!link" :href="link.url"> {{ link.name }}</a>
+    <a v-if="link.name" :href="link.url"> {{ link.name }}</a>
   </div>
 </template>
 
@@ -18,6 +18,10 @@ export default {
       type: String,
       default: 'check'
     },
+    name: {
+      type: String,
+      default: ''
+    },
     link: {
       type: Object,
       default () {
@@ -31,12 +35,16 @@ export default {
       type: String,
       default: ''
     }
+  },
+  data () {
+    return {
+      checkValue: !!this.checked
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
-
 .form-checkbox {
   input {
     display: none;
@@ -45,7 +53,6 @@ export default {
       content: '';
       position: absolute;
       left: 5px;
-      //margin-top: 3px;
       top: 3px;
       width: 12px;
       height: 9px;

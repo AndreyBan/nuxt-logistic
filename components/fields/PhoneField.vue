@@ -68,23 +68,17 @@ export default {
     deleteStartPhone () {
       if (this.phone.length <= 3) {
         this.phone = ''
+        this.field = ''
       }
     }
   },
   validations () {
+    const validate = { minLength: minLength(this.minLength) }
     if (this.required) {
-      return {
-        field: {
-          required,
-          minLength: minLength(this.minLength)
-        }
-      }
-    } else {
-      return {
-        field: {
-          minLength: minLength(this.minLength)
-        }
-      }
+      Object.assign(validate, { required })
+    }
+    return {
+      field: validate
     }
   }
 }
