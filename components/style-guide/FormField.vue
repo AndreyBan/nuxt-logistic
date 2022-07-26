@@ -1,46 +1,45 @@
 <template>
   <div class="form-field">
     <input
-      v-if="!typeTextarea && !typePhone"
-      v-model="value"
+      v-if="!typeTextarea"
+      ref="inputField"
+      v-model="$v.value.$model"
+      v-mask="mask"
       v-bind="$attrs"
       autocomplete="off"
-      :pattern="checkPattern ? checkPattern : false"
-      :class="{'valid': checkEmpty, 'error': eventBlur}"
-      @blur="getError"
-      @input="$emit('emit-input', $event.target.value)"
-    >
-    <input
-      v-else-if="typePhone"
-      v-mask="{mask: '+7(999) 999-99-99', showMaskOnHover: false}"
-      inputmode="numeric"
+      :class="{'valid': !!value, 'error': $v.value.$error}"
+      @input="getFieldValue"
     >
     <textarea
       v-else
-      v-model="value"
+      v-model="$v.value.$model"
       v-bind="$attrs"
       autocomplete="off"
-      :class="{'valid': checkEmpty}"
-      @input="$emit('input', $event.target.value)"
+      :class="{'valid': !!value, 'error': $v.value.$error}"
+      @input="getFieldValue"
     />
-    <label>{{ fieldLabel }} <span v-if="fieldRequire">*</span></label>
+    <label>{{ fieldLabel }} <span v-if="required">*</span></label>
     <span class="error-text">{{ errorText }}</span>
   </div>
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import { required, maxLength } from 'vuelidate/lib/validators'
+
+const checkCyrillic = value => !/([A-z])+/g.test(value)
+const checkLatin = value => !/([А-яёЁ])+/g.test(value)
+const checkNumber = value => !/([/\d])+/g.test(value)
+
 export default {
   name: 'FormField',
+  mixins: [validationMixin],
   inheritAttrs: false,
   props: {
     fieldLabel: {
       type: String,
       required: true,
       default: 'Label'
-    },
-    fieldError: {
-      type: String,
-      default: 'Неверный формат'
     },
     fieldValue: {
       type: String,
@@ -50,35 +49,86 @@ export default {
       type: Boolean,
       default: false
     },
-    typePhone: {
-      type: Boolean,
-      default: false
-    },
-    fieldRequire: {
-      type: Boolean,
-      default: false
-    },
-    checkPattern: {
+    validateLanguage: {
       type: String,
       default: ''
+    },
+    validateNumber: {
+      type: Boolean,
+      default: false
+    },
+    required: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
     return {
       value: this.fieldValue,
-      eventBlur: false,
-      errorText: this.fieldError
-    }
-  },
-  computed: {
-    checkEmpty () {
-      return !!this.value
+      errorText: 'Заполните поле'
     }
   },
   methods: {
-    getError () {
-      this.eventBlur = !this.checkEmpty && this.fieldRequire
-      this.errorText = !this.checkEmpty && this.fieldRequire ? 'Заполните поле' : this.fieldError
+    getFieldValue () {
+      this.$v.value.$touch()
+      if (this.$refs.inputField.validity.patternMismatch) {
+        this.errorText = 'Неверный формат'
+      } else if (this.$v.value.$error) {
+        if (!this.$v.value.required) {
+          this.errorText = 'Заполните поле'
+        } else if (this.validateLanguage) {
+          if (this.validateLanguage.toLocaleLowerCase() === 'cyrillic' && !this.$v.value.checkCyrillic) {
+            this.errorText = 'Используйте русские буквы'
+          }
+          if (this.validateLanguage.toLocaleLowerCase() === 'latin' && !this.$v.value.checkLatin) {
+            this.errorText = 'Используйте английские буквы'
+          }
+        }
+      } else {
+        this.errorText = 'Заполните поле'
+      }
+      this.$emit('get-value', this.value)
+    }
+  },
+  validations () {
+    if (this.required) {
+      if (this.validateLanguage) {
+        if (this.validateLanguage.toLocaleLowerCase() === 'cyrillic') {
+          return {
+            value: {
+              required,
+              checkCyrillic
+            }
+          }
+        } else {
+          return {
+            value: {
+              required,
+              checkLatin
+            }
+          }
+        }
+      }
+    } else if (this.validateLanguage) {
+      if (this.validateLanguage.toLocaleLowerCase() === 'cyrillic') {
+        return {
+          value: {
+            checkCyrillic
+          }
+        }
+      } else {
+        return {
+          value: {
+            checkLatin
+          }
+        }
+      }
+    } else {
+      return {
+        value: {
+          maxLength: maxLength(1000)
+        }
+      }
     }
   }
 }

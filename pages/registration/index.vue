@@ -23,17 +23,14 @@
             name="name"
             type="text"
             field-label="Наименование юр лица/ип"
-            :field-require="true"
+            :required="true"
+            validate-language="Cyrillic"
           />
-          <!--          <FormField-->
-          <!--            id="f-inn"-->
-          <!--            name="inn"-->
-          <!--            type="text"-->
-          <!--            field-label="ИНН"-->
-          <!--            :field-require="true"-->
-          <!--            @emit-input="getFieldValue($event, 'fields.mainData.INN')"-->
-          <!--          />-->
-          <inn-field />
+          <NumField
+            mask-template="##########"
+            label="ИНН"
+            :required="true"
+          />
         </div>
         <p class="title-text">
           <b>Специализация компании</b>
@@ -43,113 +40,91 @@
           <CheckboxComponent v-for="(el, i) in dataCheck" :id="'check-' + i" :key="i" :label="el" />
         </div>
         <div class="fields-grid b-mt">
-          <FormField
-            id="f-kpp"
-            name="kpp"
-            type="text"
-            field-label="КПП"
+          <NumField
+            mask-template="#########"
+            label="КПП"
+            :required="fields.mainData.formOwnership === 'Юр. лицо'"
+            :min-length="9"
           />
-          <FormField
-            id="f-rs"
-            name="rs"
-            type="text"
-            field-label="Р/сч"
-            :field-require="true"
+          <NumField
+            mask-template="####################"
+            label="Р/сч"
+            :required="true"
+            :min-length="20"
           />
           <FormField
             id="f-bank"
             name="bank"
             type="text"
             field-label="Банк"
-            :field-require="true"
+            :require="true"
           />
-          <FormField
-            id="f-ks"
-            name="ks"
-            type="text"
-            field-label="К/сч"
+          <NumField
+            mask-template="####################"
+            label="К/сч"
+            :required="true"
+            :min-length="20"
           />
-          <FormField
-            id="f-bik"
-            name="bik"
-            type="text"
-            field-label="БИК"
-            :field-require="true"
+          <NumField
+            mask-template="#########"
+            label="БИК"
+            :required="true"
+            :min-length="9"
           />
-          <FormField
-            id="f-ogrn"
-            name="ogrn"
-            type="text"
-            field-label="ОГРН"
-            :field-require="true"
+          <NumField
+            :mask-template="fields.mainData.formOwnership === 'Юр. лицо' ? '#############' : '###############'"
+            label="ОГРН"
+            :required="true"
+            :min-length="fields.mainData.formOwnership !== 'ИП' ? 13 : 15"
           />
-          <FormField
-            id="f-okpo"
-            name="okpo"
-            type="text"
-            field-label="ОКПО"
-            :field-require="true"
+          <NumField
+            :mask-template="fields.mainData.formOwnership === 'Юр. лицо' ? '########' : '##########'"
+            label="ОКПО"
+            :required="true"
+            :min-length="fields.mainData.formOwnership !== 'ИП' ? 8 : 10"
           />
           <FormField
             id="f-fio"
             name="fio"
             type="text"
             field-label="ФИО Директора организации"
-            :field-require="true"
+            :require="true"
           />
         </div>
         <div class="fields-grid fields-grid--md-bottom-full b-mt">
           <FormField
-            id="f-legal-address"
-            name="legal-address"
             type="text"
             :type-textarea="true"
             field-label="Юридический адрес"
-            :field-require="true"
+            :required="true"
             rows="4"
           />
           <FormField
-            id="f-actual-address"
-            name="actual-address"
             type="text"
             :type-textarea="true"
             field-label="Фактический адрес"
-            :field-require="true"
+            :required="true"
             rows="4"
           />
           <FormField
-            id="f-post-address"
-            name="post-address"
             type="text"
             :type-textarea="true"
             field-label="Почтовый адрес"
-            :field-require="true"
+            :required="true"
             rows="4"
           />
         </div>
         <div class="fields-grid b-mt s-pb">
+          <PhoneField :required="true" />
           <FormField
-            id="f-phone"
-            name="phone"
-            type="tel"
-            :type-phone="true"
-            field-label="Телефон"
-            :field-require="true"
-          />
-          <FormField
-            id="f-email"
-            name="email"
             type="text"
             field-label="Адрес электронной почты"
-            :field-require="true"
+            :required="true"
           />
           <FormField
-            id="f-fio-contract"
-            name="fio-contract"
             type="text"
             field-label="ФИО подписанта договора"
-            :field-require="true"
-            @emit-input="getFieldValue($event, 'nameTest')"
+            :required="true"
           />
           <input-file />
           <div class="check-column">
@@ -178,18 +153,20 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
-import { required, minLength, maxLength } from 'vuelidate/lib/validators'
 import FormField from '@/components/style-guide/FormField'
 import CheckboxComponent from '@/components/style-guide/CheckboxComponent'
 import inputFile from '@/components/style-guide/InputFile'
-import innField from '@/components/fields/InnField'
+import NumField from '@/components/fields/NumField'
+import PhoneField from '@/components/fields/PhoneField'
+
 export default {
   name: 'RegistrationPage',
   components: {
     FormField,
     CheckboxComponent,
     inputFile,
-    innField
+    NumField,
+    PhoneField
   },
   mixins: [validationMixin],
   data () {
@@ -219,25 +196,6 @@ export default {
           OKPO: '',
           organizeFIO: ''
         }
-      }
-    }
-  },
-  validations: {
-    fields: {
-      mainData: {
-        formOwnership: { required },
-        nameOrganize: { required },
-        INN: { required, minLength: minLength(10), maxLength: maxLength(10) }
-      },
-      bank: {
-        kpp: '',
-        rs: '',
-        bankName: '',
-        ks: '',
-        BIK: '',
-        OGRN: '',
-        OKPO: '',
-        organizeFIO: ''
       }
     }
   },

@@ -1,5 +1,4 @@
 import Vue from 'vue'
+import VueMask from 'v-mask'
 
-const VueInputMask = require('vue-inputmask').default
-
-Vue.use(VueInputMask)
+Vue.use(VueMask)
