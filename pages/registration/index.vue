@@ -165,6 +165,9 @@
         </div>
       </form>
     </div>
+    <AppModalWindow v-if="successWindow">
+      <SuccessRegistration />
+    </AppModalWindow>
   </section>
 </template>
 
@@ -176,6 +179,8 @@ import CheckboxComponent from '@/components/style-guide/CheckboxComponent'
 import InputFile from '@/components/fields/InputFile'
 import NumField from '@/components/fields/NumField'
 import PhoneField from '@/components/fields/PhoneField'
+import AppModalWindow from '@/components/main/AppModalWindow'
+import SuccessRegistration from '@/components/popups/SuccessRegistration'
 
 export default {
   name: 'RegistrationPage',
@@ -184,11 +189,14 @@ export default {
     CheckboxComponent,
     InputFile,
     NumField,
-    PhoneField
+    PhoneField,
+    AppModalWindow,
+    SuccessRegistration
   },
   mixins: [validationMixin],
   data () {
     return {
+      successWindow: false,
       dataCheck: {
         car: 'Автомобили',
         spec: 'Спецтехника',
@@ -233,7 +241,9 @@ export default {
         resolve()
       }).then(() => {
         this.$store.commit('registration-form/changeCheckError', false)
-        console.log(this.$store.state['registration-form'].errors)
+        if (!this.$store.state['registration-form'].errors) {
+          this.successWindow = true
+        }
       })
       return false
     },
