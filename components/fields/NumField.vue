@@ -1,7 +1,7 @@
 <template>
   <div class="form-field">
     <input
-      v-model="$v.field.$model"
+      v-model="field"
       v-mask="maskTemplate"
       type="text"
       v-bind="$attrs"
