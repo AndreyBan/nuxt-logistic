@@ -3,18 +3,20 @@
     <input
       v-if="!typeTextarea"
       ref="inputField"
-      v-model="$v.value.$model"
+      v-model="$v.field.$model"
       v-bind="$attrs"
       autocomplete="off"
-      :class="{'valid': !!value, 'error': $v.value.$error}"
+      :class="{'valid': !!field, 'error': $v.field.$error}"
+      @blur="getFieldValue"
       @input="getFieldValue"
     >
     <textarea
       v-else
-      v-model="$v.value.$model"
+      v-model="$v.field.$model"
       v-bind="$attrs"
       autocomplete="off"
-      :class="{'valid': !!value, 'error': $v.value.$error}"
+      :class="{'valid': !!field, 'error': $v.field.$error}"
+      @blur="getFieldValue"
       @input="getFieldValue"
     />
     <label>{{ fieldLabel }} <span v-if="required">*</span></label>
@@ -25,6 +27,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength } from 'vuelidate/lib/validators'
+import { mixinCheckError } from '@/mixins/AppMixins'
 
 const checkCyrillic = value => !/([A-z])+/g.test(value)
 const checkLatin = value => !/([А-яёЁ])+/g.test(value)
@@ -32,7 +35,7 @@ const checkNumber = value => !/([0-9])+/g.test(value)
 
 export default {
   name: 'FormField',
-  mixins: [validationMixin],
+  mixins: [validationMixin, mixinCheckError],
   inheritAttrs: false,
   props: {
     fieldLabel: {
@@ -63,34 +66,35 @@ export default {
   },
   data () {
     return {
-      value: this.fieldValue,
+      field: this.fieldValue,
       errorText: 'Заполните поле'
     }
   },
   methods: {
     getFieldValue () {
-      this.$v.value.$touch()
-      if (this.$refs.inputField.validity.patternMismatch) {
+      this.$v.field.$touch()
+      if (this.$refs.inputField && this.$refs.inputField.validity.patternMismatch) {
         this.errorText = 'Неверный формат'
-      } else if (this.$v.value.$error) {
-        if (this.required && !this.$v.value.required) {
+      }
+      if (this.$v.field.$error) {
+        if (this.required && !this.$v.field.required) {
           this.errorText = 'Заполните поле'
         }
         if (this.validateLanguage || this.validateNumber) {
-          if (this.validateLanguage.toLocaleLowerCase() === 'cyrillic' && !this.$v.value.checkCyrillic) {
+          if (this.validateLanguage.toLocaleLowerCase() === 'cyrillic' && !this.$v.field.checkCyrillic) {
             this.errorText = 'Используйте русские буквы'
           }
-          if (this.validateLanguage.toLocaleLowerCase() === 'latin' && !this.$v.value.checkLatin) {
+          if (this.validateLanguage.toLocaleLowerCase() === 'latin' && !this.$v.field.checkLatin) {
             this.errorText = 'Используйте английские буквы'
           }
-          if (this.validateNumber && !this.$v.value.checkNumber) {
+          if (this.validateNumber && !this.$v.field.checkNumber) {
             this.errorText = 'Использование цифр запрещено'
           }
         } else {
           this.errorText = 'Заполните поле'
         }
       }
-      this.$emit('get-value', this.value)
+      this.$emit('get-value', this.field)
     }
   },
   validations () {
@@ -106,9 +110,9 @@ export default {
     if (this.validateNumber) {
       Object.assign(validate, { checkNumber })
     }
-    Object.assign(validate, { maxLength: maxLength(10) })
+    Object.assign(validate, { maxLength: maxLength(1000) })
     return {
-      value: validate
+      field: validate
     }
   }
 }
@@ -118,6 +122,7 @@ export default {
 .form-field {
   margin-bottom: 16px;
   padding-bottom: 16px;
+  display: flex;
 }
 @media screen and (max-width: 767px) {
   .form-field {

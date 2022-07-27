@@ -7,23 +7,29 @@
           <div class="v-select-form">
             <v-select
               id="f-form"
-              v-model="fields.mainData.formOwnership"
+              v-model="$v.fields.mainData.formOwnership.$model"
               placeholder="Форма собственности*"
               :searchable="false"
               :options="typeOwnership"
               class="select-dealers"
+              @change="$v.fields.mainData.formOwnership.$touch()"
             >
               <template #no-options>
                 Ничего не найдено
               </template>
             </v-select>
+            <div v-if="$v.fields.mainData.formOwnership.$error" class="error-text-select">
+              Выберите форму собственности
+            </div>
           </div>
           <FormField
             type="text"
+            name="name"
             field-label="Наименование юр лица/ип"
             :required="true"
           />
           <NumField
+            name="inn"
             mask-template="##########"
             label="ИНН"
             :required="true"
@@ -39,7 +45,7 @@
             :id="i"
             :key="i"
             :label="el"
-            @get-value="getValue"
+            @get-value="getValueSpecs"
           />
           <p v-show="errorEmptyCheckboxes" class="error-empty-checkboxes">
             *Необходимо выбрать минимум одну специализацию
@@ -63,7 +69,7 @@
             name="bank"
             type="text"
             field-label="Банк"
-            :require="true"
+            :required="true"
           />
           <NumField
             mask-template="####################"
@@ -135,12 +141,13 @@
             :validate-number="true"
             :required="true"
           />
-          <InputFile />
+          <InputFile :required="true" />
           <div class="check-column">
             <CheckboxComponent
               id="check-agree"
               label="Даю согласие на "
               :link="{name: 'обработку персональных данных', url: '#'}"
+              :required="true"
               checked="checked"
               class="e-mb"
             />
@@ -148,6 +155,7 @@
               id="check-rules"
               label="Ознакомлен с "
               :link="{name: 'правилами портала', url: '#'}"
+              :required="true"
               checked="checked"
             />
           </div>
@@ -162,6 +170,7 @@
 
 <script>
 import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
 import FormField from '@/components/fields/FormField'
 import CheckboxComponent from '@/components/style-guide/CheckboxComponent'
 import InputFile from '@/components/fields/InputFile'
@@ -195,14 +204,7 @@ export default {
           nameOrganize: '',
           INN: ''
         },
-        checkSpecs: {
-          car: '',
-          spec: '',
-          cargo: '',
-          products: '',
-          pallet: '',
-          danger: ''
-        },
+        checkSpecs: [],
         bank: {
           kpp: '',
           rs: '',
@@ -223,7 +225,16 @@ export default {
      * @returns {boolean}
      */
     formSubmit () {
-      this.checkSpecs()
+      new Promise((resolve) => {
+        this.$store.commit('registration-form/resetErrors')
+        this.checkSpecs()
+        this.$store.commit('registration-form/changeCheckError', true)
+        this.$v.fields.mainData.formOwnership.$touch()
+        resolve()
+      }).then(() => {
+        this.$store.commit('registration-form/changeCheckError', false)
+        console.log(this.$store.state['registration-form'].errors)
+      })
       return false
     },
     /**
@@ -231,17 +242,11 @@ export default {
      * @param scroll {Boolean}
      */
     checkSpecs (scroll = true) {
-      let emptyCheckboxes = true
-      const checkGroup = this.fields.checkSpecs
-      for (const v in checkGroup) {
-        if (checkGroup[v]) {
-          emptyCheckboxes = false
-        }
-      }
       // Показываем ошибку, что не заполненна ни одна специализация
-      this.errorEmptyCheckboxes = emptyCheckboxes
+      this.errorEmptyCheckboxes = !this.fields.checkSpecs.length
+      this.$store.commit('registration-form/setError', this.errorEmptyCheckboxes)
       // Скролл к блоку специализаций для случая когда пытаются отправить форму не выбрав ни одной специализации
-      if (emptyCheckboxes && scroll) {
+      if (this.errorEmptyCheckboxes && scroll) {
         this.$refs['block-checkboxes'].scrollIntoView({
           behavior: 'smooth',
           block: 'center'
@@ -252,11 +257,28 @@ export default {
      * Получение значения чекбокса
      * @param e
      */
-    getValue (e) {
+    getValueSpecs (e) {
       this.errorEmptyCheckboxes = false
       const key = Object.keys(e)[0]
-      this.fields.checkSpecs[key] = e[key]
+      if (e[key].checked) {
+        this.fields.checkSpecs.push({ id: key, value: e[key].value })
+      } else {
+        this.fields.checkSpecs.forEach((el, i) => {
+          if (el.id === key) {
+            this.fields.checkSpecs.splice(i, 1)
+          }
+        })
+      }
       this.checkSpecs(false)
+    }
+  },
+  validations: {
+    fields: {
+      mainData: {
+        formOwnership: {
+          required
+        }
+      }
     }
   }
 }
@@ -269,6 +291,10 @@ export default {
 }
 </style>
 <style scoped lang="scss">
+.v-select-form {
+  position: relative;
+  margin-bottom: 16px;
+}
 .fields-grid {
   display: grid;
   grid-template: auto / repeat(3, 1fr);

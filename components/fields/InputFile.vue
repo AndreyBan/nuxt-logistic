@@ -12,6 +12,7 @@
       {{ file.name }}
       <span class="delete-file e-ml" />
     </div>
+    <span v-if="!dataFiles.length && (checkStateSubmit || emptyAfterDelete)" class="error-text">Загрузите файлы</span>
   </div>
 </template>
 
@@ -23,19 +24,47 @@ export default {
   components: {
     showSvg
   },
+  props: {
+    required: {
+      type: Boolean,
+      default: false
+    }
+  },
   data () {
     return {
       arFiles: [],
-      dataFiles: {}
+      dataFiles: {},
+      submitEvnt: false,
+      emptyAfterDelete: false
+    }
+  },
+  computed: {
+    checkError () {
+      return this.$store.state['registration-form'].checkError
+    },
+    checkStateSubmit () {
+      if (this.$store.state['registration-form'].checkError) {
+        this.setStateSubmit()
+      }
+      return this.submitEvnt
+    }
+  },
+  watch: {
+    checkError () {
+      if (this.required && !this.dataFiles.length) {
+        this.$store.commit('registration-form/setError', true)
+      }
     }
   },
   methods: {
     previewFiles (e) {
       this.arFiles = Array.from(e.target.files)
+      this.dataFiles = this.getFileList(this.arFiles)
     },
     fileDelete (indexFile) {
       this.arFiles.splice(indexFile, 1)
       this.dataFiles = this.getFileList(this.arFiles)
+      this.emptyAfterDelete = !this.dataFiles.length
     },
     getFileList (arFiles) {
       const dt = new DataTransfer()
@@ -43,16 +72,25 @@ export default {
         dt.items.add(arFiles[i])
       }
       return dt.files
+    },
+    setStateSubmit () {
+      this.submitEvnt = true
     }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.form-field-file{
+.form-field-file {
   position: relative;
 }
-.form-field .form-field-file label{
+
+.error-text {
+  display: block;
+  position: relative;
+}
+
+.form-field .form-field-file label {
   pointer-events: auto;
   width: 100%;
   max-width: 390px;
@@ -64,20 +102,24 @@ export default {
   position: static;
   align-items: center;
 }
-.paper-clip{
+
+.paper-clip {
   width: 16px;
   height: 16px;
 }
+
 .download-file {
   color: #B2B2B2;
   text-decoration: underline;
   display: flex;
   align-items: center;
   margin-top: 10px;
+
   &:last-child {
     margin-bottom: 10px;
   }
 }
+
 .delete-file {
   display: inline-block;
   width: 16px;
@@ -87,6 +129,7 @@ export default {
   position: relative;
   padding: 2px;
   cursor: pointer;
+
   &:before,
   &:after {
     content: '';
@@ -97,9 +140,11 @@ export default {
     height: 1px;
     background-color: #FFF;
   }
+
   &:before {
     transform: rotate(45deg);
   }
+
   &:after {
     transform: rotate(-45deg);
   }

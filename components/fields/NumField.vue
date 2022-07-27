@@ -1,14 +1,15 @@
 <template>
   <div class="form-field">
     <input
-      v-model="field"
+      v-model="$v.field.$model"
       v-mask="maskTemplate"
       type="text"
+      v-bind="$attrs"
       inputmode="numeric"
       autocomplete="off"
       :class="{'valid': !!field, 'error': $v.field.$error}"
-      @change="getFieldValue"
-      @blur="getFieldValue"
+      @change="$v.field.$touch()"
+      @blur="$v.field.$touch()"
     >
     <label>{{ label }} <span v-if="$v.field.required !== undefined">*</span></label>
     <span class="error-text">{{ errorText }}</span>
@@ -18,10 +19,12 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, minLength } from 'vuelidate/lib/validators'
+import { mixinCheckError } from '@/mixins/AppMixins'
 
 export default {
   name: 'InnField',
-  mixins: [validationMixin],
+  mixins: [validationMixin, mixinCheckError],
+  inheritAttrs: false,
   props: {
     required: {
       type: Boolean,
@@ -55,25 +58,13 @@ export default {
       return 'Заполните поле'
     }
   },
-  methods: {
-    getFieldValue () {
-      this.$v.field.$touch()
-    }
-  },
   validations () {
+    const validate = { minLength: minLength(this.minLength) }
     if (this.required) {
-      return {
-        field: {
-          required,
-          minLength: minLength(this.minLength)
-        }
-      }
-    } else {
-      return {
-        field: {
-          minLength: minLength(this.minLength)
-        }
-      }
+      Object.assign(validate, { required })
+    }
+    return {
+      field: validate
     }
   }
 }
@@ -83,6 +74,7 @@ export default {
 .form-field {
   margin-bottom: 16px;
   padding-bottom: 16px;
+  display: flex;
 }
 
 @media screen and (max-width: 767px) {

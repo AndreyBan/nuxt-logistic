@@ -113,14 +113,16 @@ $colorError: #F90F0F;
   }
 }
 
-.error-text {
+.error-text,
+.error-text-select{
   color: $colorError;
-  display: none;
   position: absolute;
   left: 16px;
   bottom: -4px;
 }
-
+.error-text{
+  display: none;
+}
 .has-error {
   .error-text {
     display: block;

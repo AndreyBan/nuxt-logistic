@@ -1,8 +1,11 @@
 <template>
   <div class="form-checkbox">
-    <input :id="id" v-model="checkValue" type="checkbox" :checked="!!checked" @change="$emit('get-value', {[id]: checkValue ? label: ''})">
+    <input :id="id" v-model="checkValue" type="checkbox" :checked="!!checked" @change="$emit('get-value', {[id]: {checked: checkValue, value: label}})">
     <label :for="id">{{ label }}</label>
     <a v-if="link.name" :href="link.url"> {{ link.name }}</a>
+    <div v-if="required && !checkValue && checkStateSubmit" class="error-text">
+      Поставьте галочку
+    </div>
   </div>
 </template>
 
@@ -22,6 +25,10 @@ export default {
       type: String,
       default: ''
     },
+    required: {
+      type: Boolean,
+      default: false
+    },
     link: {
       type: Object,
       default () {
@@ -38,7 +45,31 @@ export default {
   },
   data () {
     return {
-      checkValue: !!this.checked
+      checkValue: !!this.checked,
+      submitEvnt: false
+    }
+  },
+  computed: {
+    checkError () {
+      return this.$store.state['registration-form'].checkError
+    },
+    checkStateSubmit () {
+      if (this.$store.state['registration-form'].checkError) {
+        this.setStateSubmit()
+      }
+      return this.submitEvnt
+    }
+  },
+  watch: {
+    checkError () {
+      if (this.required && !this.checkValue) {
+        this.$store.commit('registration-form/setError', true)
+      }
+    }
+  },
+  methods: {
+    setStateSubmit () {
+      this.submitEvnt = true
     }
   }
 }
@@ -46,6 +77,15 @@ export default {
 
 <style scoped lang="scss">
 .form-checkbox {
+  position: relative;
+  .error-text {
+    display: block;
+    position: relative;
+    bottom: 0;
+    margin-top: 8px;
+    left: 30px;
+    font-size: 12px;
+  }
   input {
     display: none;
 
