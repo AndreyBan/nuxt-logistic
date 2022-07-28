@@ -2,20 +2,24 @@
   <section class="s-pt">
     <div class="container">
       <h1>Восстановление пароля</h1>
-      <div class="fields-grid b-mt">
+      <form class="fields-grid b-mt" @submit.prevent="formSubmit">
         <div class="v-select-form">
           <v-select
             id="f-form"
-            v-model="fields.mainData.formOwnership"
+            v-model="$v.fields.mainData.formOwnership.$model"
             placeholder="Форма собственности*"
             :searchable="false"
             :options="typeOwnership"
             class="select-dealers"
+            @change="$v.fields.mainData.formOwnership.$touch()"
           >
             <template #no-options>
               Ничего не найдено
             </template>
           </v-select>
+          <div v-if="$v.fields.mainData.formOwnership.$error" class="error-text-select">
+            Выберите форму собственности
+          </div>
         </div>
         <FormField
           type="text"
@@ -34,21 +38,23 @@
           :min-length="9"
         />
         <FormField
-          type="text"
+          type="email"
           field-label="Адрес электронной почты"
           validate-language="latin"
           :required="true"
         />
-        <button class="btn btn--primary btn--w-auto">
+        <button type="submit" class="btn btn--primary btn--w-auto">
           Восстановить доступ
         </button>
-      </div>
+      </form>
     </div>
     <div class="bottom-img e-big-mt" />
   </section>
 </template>
 
 <script>
+import { validationMixin } from 'vuelidate'
+import { required } from 'vuelidate/lib/validators'
 import FormField from '@/components/fields/FormField'
 import NumField from '@/components/fields/NumField'
 
@@ -58,6 +64,7 @@ export default {
     FormField,
     NumField
   },
+  mixins: [validationMixin],
   data () {
     return {
       typeOwnership: ['Юр. лицо', 'ИП'],
@@ -66,6 +73,31 @@ export default {
           formOwnership: '',
           nameOrganize: '',
           INN: ''
+        }
+      }
+    }
+  },
+  methods: {
+    formSubmit () {
+      new Promise((resolve) => {
+        this.$store.commit('registration-form/resetErrors')
+        this.$store.commit('registration-form/changeCheckError', true)
+        this.$v.fields.mainData.formOwnership.$touch()
+        resolve()
+      }).then(() => {
+        this.$store.commit('registration-form/changeCheckError', false)
+        if (!this.$store.state['registration-form'].errors) {
+          alert('Успешно')
+        }
+      })
+      return false
+    }
+  },
+  validations: {
+    fields: {
+      mainData: {
+        formOwnership: {
+          required
         }
       }
     }
@@ -86,7 +118,10 @@ export default {
     justify-self: flex-end;
   }
 }
-
+.v-select-form {
+  position: relative;
+  margin-bottom: 16px;
+}
 .bottom-img {
   height: 519px;
   background-image: url("/img/backgrounds/bg-recovery-pass.jpg");

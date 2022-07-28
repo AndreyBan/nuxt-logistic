@@ -129,7 +129,7 @@
         <div class="fields-grid b-mt s-pb">
           <PhoneField :required="true" />
           <FormField
-            type="text"
+            type="email"
             field-label="Адрес электронной почты"
             validate-language="latin"
             :required="true"
@@ -245,7 +245,6 @@ export default {
           this.successWindow = true
         }
       })
-      return false
     },
     /**
      * Проверка на выбранную специализацию

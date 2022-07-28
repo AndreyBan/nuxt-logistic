@@ -1,6 +1,6 @@
 <template>
   <svg :class="iconClass ? iconClass : id">
-    <use xmlns="http://www.w3.org/2000/svg" :xlink:href="`/img/svg/map.svg#${id}`" />
+    <use xmlns="http://www.w3.org/2000/svg" :xlink:href="`/img/svg/map.svg#${getId}`" />
   </svg>
 </template>
 
@@ -16,6 +16,11 @@ export default {
     iconClass: {
       type: String,
       default: ''
+    }
+  },
+  computed: {
+    getId () {
+      return this.id
     }
   }
 }

@@ -73,14 +73,11 @@ export default {
   methods: {
     getFieldValue () {
       this.$v.field.$touch()
-      if (this.$refs.inputField && this.$refs.inputField.validity.patternMismatch) {
-        this.errorText = 'Неверный формат'
-      }
       if (this.$v.field.$error) {
         if (this.required && !this.$v.field.required) {
           this.errorText = 'Заполните поле'
         }
-        if (this.validateLanguage || this.validateNumber) {
+        if (this.validateLanguage || this.validateNumber || this.checkEmail) {
           if (this.validateLanguage.toLocaleLowerCase() === 'cyrillic' && !this.$v.field.checkCyrillic) {
             this.errorText = 'Используйте русские буквы'
           }

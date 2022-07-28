@@ -61,11 +61,20 @@ export default {
       this.arFiles = Array.from(e.target.files)
       this.dataFiles = this.getFileList(this.arFiles)
     },
+    /**
+     * Удаление файла
+     * @param indexFile
+     */
     fileDelete (indexFile) {
       this.arFiles.splice(indexFile, 1)
       this.dataFiles = this.getFileList(this.arFiles)
       this.emptyAfterDelete = !this.dataFiles.length
     },
+    /**
+     * Создание объекта файлов типа FileList
+     * @param arFiles
+     * @returns {FileList}
+     */
     getFileList (arFiles) {
       const dt = new DataTransfer()
       for (const i in arFiles) {
@@ -73,6 +82,9 @@ export default {
       }
       return dt.files
     },
+    /**
+     * Установка флага нажатия кнопки отправки формы
+     */
     setStateSubmit () {
       this.submitEvnt = true
     }
