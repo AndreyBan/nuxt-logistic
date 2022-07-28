@@ -165,7 +165,7 @@
         </div>
       </form>
     </div>
-    <AppModalWindow v-if="successWindow">
+    <AppModalWindow v-if="successWindow" @close-modal="successWindow = false">
       <SuccessRegistration />
     </AppModalWindow>
   </section>

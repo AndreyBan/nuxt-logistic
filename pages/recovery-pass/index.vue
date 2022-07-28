@@ -42,6 +42,7 @@
           field-label="Адрес электронной почты"
           validate-language="latin"
           :required="true"
+          @get-value="getValue"
         />
         <button type="submit" class="btn btn--primary btn--w-auto">
           Восстановить доступ
@@ -49,6 +50,10 @@
       </form>
     </div>
     <div class="bottom-img e-big-mt" />
+    <AppModalWindow v-if="showModal" @close-modal="closeModal">
+      <SuccessRecovery v-if="successWindow" />
+      <FailedRecovery v-if="failedWindow" />
+    </AppModalWindow>
   </section>
 </template>
 
@@ -57,12 +62,18 @@ import { validationMixin } from 'vuelidate'
 import { required } from 'vuelidate/lib/validators'
 import FormField from '@/components/fields/FormField'
 import NumField from '@/components/fields/NumField'
+import AppModalWindow from '@/components/main/AppModalWindow'
+import SuccessRecovery from '@/components/popups/SuccessRecovery'
+import FailedRecovery from '@/components/popups/FailedRecovery'
 
 export default {
   name: 'RecoveryPass',
   components: {
     FormField,
-    NumField
+    NumField,
+    AppModalWindow,
+    SuccessRecovery,
+    FailedRecovery
   },
   mixins: [validationMixin],
   data () {
@@ -73,11 +84,21 @@ export default {
           formOwnership: '',
           nameOrganize: '',
           INN: ''
-        }
-      }
+        },
+        email: ''
+      },
+      successWindow: false,
+      failedWindow: false,
+      showModal: false
     }
   },
   methods: {
+    closeModal () {
+      this.showModal = this.successWindow = this.failedWindow = false
+    },
+    getValue (e) {
+      this.fields.email = e
+    },
     formSubmit () {
       new Promise((resolve) => {
         this.$store.commit('registration-form/resetErrors')
@@ -87,7 +108,13 @@ export default {
       }).then(() => {
         this.$store.commit('registration-form/changeCheckError', false)
         if (!this.$store.state['registration-form'].errors) {
-          alert('Успешно')
+          // TODO: Test
+          this.showModal = true
+          if (this.fields.email !== 'test@test.ru') {
+            this.failedWindow = true
+          } else {
+            this.successWindow = true
+          }
         }
       })
       return false
