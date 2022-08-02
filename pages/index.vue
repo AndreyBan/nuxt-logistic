@@ -1,8 +1,8 @@
 <template>
   <div>
     <BannerBlock />
-    <AuthorizationBlock />
-    <RulesBlock />
+    <AuthorizationBlock v-if="!isLogin" />
+    <RulesBlock v-if="!isLogin" />
   </div>
 </template>
 
@@ -17,6 +17,11 @@ export default {
     BannerBlock,
     AuthorizationBlock,
     RulesBlock
+  },
+  data () {
+    return {
+      isLogin: this.$store.state.login.login
+    }
   }
 }
 </script>

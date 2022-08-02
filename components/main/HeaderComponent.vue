@@ -41,6 +41,9 @@ export default {
     return {
       modalShow: false
     }
+  },
+  beforeCreate () {
+    this.$store.dispatch('login/isLogin')
   }
 }
 </script>

@@ -88,7 +88,8 @@ export default {
         if (this.form.login.value !== 'test' || this.form.password.value !== 'test') {
           this.form.password.error = 'Введен неверный логин и/или пароль'
         } else {
-          alert('Вход выполнен')
+          this.$store.commit('login/setLogin', true)
+          this.$router.push('/')
         }
       }
     }
