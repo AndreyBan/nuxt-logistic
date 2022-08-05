@@ -18,6 +18,27 @@ export default {
   static: {
     prefix: false
   },
+  auth: {
+    strategies: {
+      local: {
+        token: {
+          property: 'token',
+          global: true
+          // required: true,
+          // type: 'Bearer'
+        },
+        user: {
+          property: 'user',
+          autoFetch: false
+        },
+        endpoints: {
+          login: { url: '/api/login', method: 'post' },
+          logout: { url: '/api/logout', method: 'post' },
+          user: { url: '/api/user', method: 'get' }
+        }
+      }
+    }
+  },
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     'vue-select/dist/vue-select.css',
@@ -26,7 +47,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/vSelect.js' },
-    { src: '~/plugins/vueInputMask.js' }
+    { src: '~/plugins/vueInputMask.js' },
+    { src: '~/plugins/paginate.js' }
   ],
   styleResources: {
     scss: ['@/assets/scss/variables.scss'],
@@ -56,7 +78,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/'
+    baseURL: 'http://localhost:3000/api'
   },
   ssr: false,
   // Build Configuration: https://go.nuxtjs.dev/config-build
@@ -71,5 +93,9 @@ export default {
         config.devtool = '#source-map'
       }
     }
+  },
+  server: {
+    host: '0.0.0.0',
+    port: 3000
   }
 }

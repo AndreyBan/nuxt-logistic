@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 
-app.get('/login', function (req, res) {
+app.post('/login', function (req, res) {
   const testObj = {
     token: 'faiw34hf7w83hf783'
   }

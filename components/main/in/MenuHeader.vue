@@ -5,7 +5,7 @@
       <span class="mobile-menu-burger__line" />
     </label>
     <div class="menu-header">
-      <LoginLink :modal-show="modalShow" @modal-open="$emit('modal-open')" />
+      <LoginHeader :modal-show="modalShow" class="menu-header-login" @modal-open="$emit('modal-open')" />
       <nav>
         <ul role="menu">
           <li>
@@ -27,12 +27,12 @@
 </template>
 
 <script>
-import LoginLink from '@/components/main/LoginLink'
+import LoginHeader from '@/components/main/in/LoginHeader'
 
 export default {
-  name: 'MenuComponent',
+  name: 'MenuHeader',
   components: {
-    LoginLink
+    LoginHeader
   },
   props: {
     modalShow: {
@@ -67,6 +67,7 @@ export default {
     color: #444;
     text-decoration: none;
     transition-duration: .2s;
+    font-family: 'Montserrat', sans-serif;
     &:hover {
       color: scotch-color('primary');
     }

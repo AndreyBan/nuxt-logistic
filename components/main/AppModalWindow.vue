@@ -17,6 +17,7 @@ export default {
   }),
   mounted () {
     this.disableOverFlow('hidden')
+    // TODO: Можно доработать через @click на .modal-window
     const overClick = (e) => {
       if (getComputedStyle(this.$refs.modal).opacity === '1') {
         if (e.target.classList.contains('modal-window') || e.target.classList.contains('btn')) {

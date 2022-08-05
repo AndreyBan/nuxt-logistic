@@ -9,12 +9,15 @@
               <span class="header-logo__separate" />
               <span class="header-logo__text">Логистический<br>портал ГК АГАТ</span>
             </nuxt-link>
-            <LoginLink :modal-show="modalShow" @modal-open="modalShow = true" />
+            <div class="header-top__right">
+              <NotificationHeader v-if="isLogin" />
+              <LoginHeader :modal-show="modalShow" @modal-open="openModal" />
+            </div>
           </div>
         </div>
       </div>
       <div class="header-bottom">
-        <MenuComponent :modal-show="modalShow" @modal-open="modalShow = true" />
+        <MenuHeader :modal-show="modalShow" @modal-open="openModal" />
       </div>
     </header>
     <AppModalWindow v-if="modalShow" @close-modal="modalShow = false">
@@ -24,26 +27,40 @@
 </template>
 
 <script>
-import MenuComponent from '@/components/main/MenuComponent'
-import LoginLink from '@/components/main/LoginLink'
+import MenuHeader from '@/components/main/in/MenuHeader'
+import LoginHeader from '@/components/main/in/LoginHeader'
 import AppModalWindow from '@/components/main/AppModalWindow'
 import AuthComponent from '@/components/popups/AuthComponent'
+import NotificationHeader from '@/components/main/in/NotificationHeader'
 
 export default {
   name: 'HeaderComponent',
   components: {
-    LoginLink,
-    MenuComponent,
+    LoginHeader,
+    MenuHeader,
     AppModalWindow,
-    AuthComponent
+    AuthComponent,
+    NotificationHeader
   },
   data () {
     return {
       modalShow: false
     }
   },
+  computed: {
+    isLogin () {
+      return this.$store.state.login.login
+    }
+  },
   beforeCreate () {
     this.$store.dispatch('login/isLogin')
+  },
+  methods: {
+    openModal () {
+      if (!this.isLogin) {
+        this.modalShow = true
+      }
+    }
   }
 }
 </script>
@@ -59,13 +76,15 @@ export default {
 .header-top {
   padding: 28px 0;
   background-color: #FFF;
+  &__right {
+    display: flex;
+    align-items: center;
+  }
+  &-grid {
+    display: flex;
+    justify-content: space-between;
+  }
 }
-
-.header-top-grid {
-  display: flex;
-  justify-content: space-between;
-}
-
 .header-bottom {
   background-color: #F9F9F9;
   padding: 18px 0;
@@ -88,6 +107,7 @@ export default {
 }
 
 .header-logo__text {
+  font-family: 'Montserrat', sans-serif;
   margin-left: 15px;
 }
 

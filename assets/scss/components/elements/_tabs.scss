@@ -16,8 +16,16 @@
     }
 
     &.active{
-      border-bottom: 5px solid scotch-color('accent');
-
+      position: relative;
+      &:before{
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        height: 5px;
+        width: 100%;
+        background-color: scotch-color('primary');
+        border-radius: 22px;
+      }
     }
   }
 }

@@ -1,8 +1,14 @@
 <template>
   <div class="form-checkbox">
-    <input :id="id" v-model="checkValue" type="checkbox" :checked="!!checked" @change="$emit('get-value', {[id]: {checked: checkValue, value: label}})">
+    <input
+      :id="id"
+      v-model="checkValue"
+      type="checkbox"
+      :checked="!!checked"
+      @change="$emit('get-value', {[id]: {checked: checkValue, value: label}})"
+    >
     <label :for="id">{{ label }}</label>
-    <a v-if="link.name" :href="link.url"> {{ link.name }}</a>
+    <a v-if="link.name" :href="link.url">{{ link.name }}</a>
     <div v-if="required && !checkValue && checkStateSubmit" class="error-text">
       Поставьте галочку
     </div>
@@ -14,7 +20,7 @@ export default {
   name: 'CheckboxComponent',
   props: {
     id: {
-      type: String,
+      type: [String, Number],
       default: 'check-1'
     },
     label: {
@@ -43,6 +49,7 @@ export default {
       default: ''
     }
   },
+  emits: ['get-value'],
   data () {
     return {
       checkValue: !!this.checked,

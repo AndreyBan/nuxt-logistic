@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Open+Sans:wght@300;400;500;600;700&display=swap');
 //@import "variables";
 @import "components/elements/btns";
 //@import "components/elements/checkbox";
@@ -43,8 +43,55 @@ main {
 .vs__clear{
   margin-right: 28px;
 }
+.pagination {
+  display: flex;
+  list-style: none;
+  padding-left: 0;
+  margin-top: 48px;
+  justify-content: center;
+}
+
+.pagination li a {
+  display: inline-block;
+  padding: 8px 24px;
+  margin: 0 4px;
+  border: 1px solid #C4C4C4;
+  border-radius: 30px;
+  text-decoration: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.pagination li.active a {
+  color: #fff;
+  background-color: scotch-color('primary');
+  border: 1px solid scotch-color('primary');
+}
+
+//.pagination li:not(:last-child) a {
+//  border-right: none;
+//}
+
+.pagination li.disabled a {
+  cursor: not-allowed;
+}
+
+.pagination li.disabled {
+  opacity: .3;
+}
+
 @media screen and (max-width: 991px) {
   body {
     padding-top: 99px;
+  }
+}
+@media screen and (max-width: 576px) {
+  .pagination li a {
+    padding: 8px 18px;
+    margin: 0 2px;
   }
 }

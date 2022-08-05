@@ -15,6 +15,8 @@ export const mutations = {
     if (data) {
       // TODO: Test
       localStorage.setItem('isLogin', '1')
+    } else {
+      localStorage.removeItem('isLogin')
     }
     state.login = data
   }

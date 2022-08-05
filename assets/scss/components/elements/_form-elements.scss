@@ -20,7 +20,7 @@ $colorError: #F90F0F;
     transition-duration: .2s;
   }
 }
-.vs--open .vs__search {
+.vs--open:not(.vs--searchable) .vs__search {
   transform: translateY(-30px);
   &::placeholder {
     font-size: 0.875em;
