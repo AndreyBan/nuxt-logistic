@@ -3,16 +3,16 @@
     href="#"
     rel="nofollow"
     class="header-login"
-    :class="{'header-login--auth': isLogin}"
+    :class="{'header-login--auth': isLogin, 'locate-header': locate === 'header'}"
     @click.prevent="openModal"
   >
     <span v-if="isLogin" class="header-login__name-organization">ООО Test</span>
-    <div class="header-login__icon" @click="openTooltip">
-      <ShowSvg :id="isLogin ? 'icon-profile' : 'login-user'" />
+    <div class="header-login__icon" :class="{'is-login': isLogin}" @click="openTooltip">
+      <ShowSvg id="login-user" />
     </div>
     <span v-if="!isLogin" class="header-login__link">Войти</span>
     <div v-show="showTooltip" class="header-login__tooltip">
-      <NuxtLink to="#">Настройка профиля</NuxtLink>
+      <NuxtLink to="#"><span @click="emitCloseTooltip">Настройка профиля</span></NuxtLink>
       <div class="logout" @click="logout">Выход</div>
     </div>
   </a>
@@ -30,9 +30,13 @@ export default {
     modalShow: {
       type: Boolean,
       default: false
+    },
+    locate: {
+      type: String,
+      default: ''
     }
   },
-  emits: ['modal-open'],
+  emits: ['modal-open', 'close-tooltip'],
   data () {
     return {
       showTooltip: false
@@ -48,11 +52,18 @@ export default {
       setTimeout(() => {
         this.closeTooltip()
         this.$store.commit('login/setLogin', false)
+        this.emitCloseTooltip()
+      })
+    },
+    emitCloseTooltip () {
+      this.closeTooltip()
+      setTimeout(() => {
+        this.$emit('close-tooltip')
       })
     },
     overClick (e) {
-      if (this.showTooltip && e.target.className !== 'header-login__icon') {
-        if (!['header-login__tooltip', 'logout'].includes(e.target.className)) {
+      if (this.showTooltip && !e.target.classList.contains('header-login__icon')) {
+        if (!e.target.closest('.header-login__tooltip')) {
           this.removeEventClose()
           this.closeTooltip()
         }
@@ -68,7 +79,7 @@ export default {
       this.showTooltip = false
     },
     openTooltip () {
-      if (this.isLogin && !this.showTooltip) {
+      if (this.isLogin && !this.showTooltip && this.locate === 'header') {
         this.showTooltip = true
         document.addEventListener('click', this.overClick)
         if (matchMedia('(max-width:1024px)').matches) {
@@ -96,11 +107,13 @@ export default {
   text-decoration: none;
   font-family: 'Montserrat', sans-serif;
 }
+
 .logout {
   color: scotch-color('primary');
   text-decoration: underline;
   margin-top: 16px;
 }
+
 .header-login {
   display: flex;
   flex-direction: column;
@@ -118,10 +131,11 @@ export default {
   &--auth {
     flex-direction: row;
   }
+
   &__tooltip {
     position: absolute;
     background-color: #FFF;
-    padding: 32px ;
+    padding: 32px;
     border-radius: 29px;
     width: 217px;
     box-shadow: 0 0 23px rgba(0, 0, 0, 0.14);
@@ -132,9 +146,11 @@ export default {
     opacity: 1;
     transition-duration: .3s;
     text-align: center;
+
     &-hide {
       opacity: 0;
     }
+
     &:after {
       content: '';
       position: absolute;
@@ -148,31 +164,63 @@ export default {
     }
   }
 }
-
-.login-user {
-  width: 17px;
-  height: 21px;
-}
-
-.icon-profile {
+.is-login {
   width: 48px;
   height: 48px;
-  pointer-events: none;
+  background-color: #F9F9F9;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .login-user {
+    pointer-events: none;
+  }
 }
+
 @media screen and (max-width: 1420px) and (min-width: 1024px) {
   .header-login__tooltip {
     transform: translateX(-5%);
+
     &:after {
       left: 66%;
     }
   }
 }
+
 @media screen and (max-width: 991px) {
   .header-login.menu-header-login {
     .header-login__name-organization {
       margin: 0 24px 0 0;
       pointer-events: none;
       order: 1;
+    }
+  }
+  .header-top__right .header-login__name-organization {
+    display: none;
+  }
+  .header-login__tooltip {
+    padding: 14px;
+    width: 180px;
+    margin-top: 64px;
+    transform: translateX(8%);
+  }
+}
+@media screen and (max-width: 767px) {
+  .header-login__tooltip {
+    margin-top: 54px;
+    transform: translateX(-10%);
+    &:after {
+      left: 45%;
+    }
+  }
+  .locate-header .is-login{
+    width: auto;
+    height: auto;
+    background-color: transparent;
+    .login-user {
+      width: 18px;
+      height: 23px;
     }
   }
 }

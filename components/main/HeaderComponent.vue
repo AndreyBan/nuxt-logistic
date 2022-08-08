@@ -11,7 +11,7 @@
             </nuxt-link>
             <div class="header-top__right">
               <NotificationHeader v-if="isLogin" />
-              <LoginHeader :modal-show="modalShow" @modal-open="openModal" />
+              <LoginHeader :modal-show="modalShow" locate="header" @modal-open="openModal" />
             </div>
           </div>
         </div>
@@ -128,10 +128,18 @@ export default {
 
 @media screen and (max-width: 767px) {
   .header-logo__separate,
-  .header-logo__text,
-  .header-top .header-login {
+  .header-logo__text {
     display: none;
   }
+  .header-logo img{
+    width: 70px;
+  }
 
+  .header-top {
+    padding: 25px 0;
+  }
+  .header-login {
+    margin-right: 54px;
+  }
 }
 </style>

@@ -5,7 +5,7 @@
       <p class="auth-block__subtitle b-mt b-mb">
         Добро пожаловать на специализированную площадку Транспортной компании “АГАТ-Логистик”
       </p>
-      <NuxtLink to="/authorization/" class="btn btn--primary btn--w-auto e-big-mr">
+      <NuxtLink to="/authorization/" class="btn btn--primary btn--w-auto">
         Войти
       </NuxtLink>
       <NuxtLink to="/registration/" class="btn btn--secondary btn--w-auto">
@@ -28,7 +28,9 @@ export default {
   background-image: url("/img/backgrounds/bg-auth.jpg");
   background-repeat: no-repeat;
   background-position: 68% 0;
-
+  .btn:last-child {
+    margin-left: 24px;
+  }
   &__subtitle {
     max-width: 500px;
   }
@@ -49,6 +51,9 @@ export default {
   .auth-block {
     padding: 32px 0;
     background-image: none;
+    .btn:last-child {
+      margin-left: 0;
+    }
   }
   .btn.btn--primary{
     margin-bottom: 24px;

@@ -128,7 +128,15 @@ export default {
   .bell {
     &-wrap {
       margin-top: 8px;
-      margin-right: 64px;
+      margin-right: 24px;
+    }
+    &-tooltip {
+      transform: translateX(calc(-60%));
+      padding: 24px;
+      width: 300px;
+      &:after {
+        left: 54%;
+      }
     }
   }
 }

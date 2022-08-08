@@ -24,7 +24,9 @@ export default {
 
 <style scoped lang="scss">
 .popup-auth {
-  text-align: center; padding: 36px 100px;
+  text-align: center;
+  padding: 36px 100px;
+
   &-buttons {
     margin: 0 auto;
     width: 100%;
@@ -32,4 +34,13 @@ export default {
   }
 }
 
+@media screen and (max-width: 767px) {
+  .popup-auth {
+    padding: 36px 48px 32px;
+    h3 {
+      font-size: 16px;
+    }
+  }
+
+}
 </style>

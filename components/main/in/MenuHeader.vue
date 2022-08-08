@@ -1,27 +1,34 @@
 <template>
   <div class="container">
-    <input id="menu-burger" type="checkbox">
-    <label for="menu-burger" class="mobile-menu-burger">
-      <span class="mobile-menu-burger__line" />
-    </label>
-    <div class="menu-header">
-      <LoginHeader :modal-show="modalShow" class="menu-header-login" @modal-open="$emit('modal-open')" />
-      <nav>
-        <ul role="menu">
-          <li>
-            <a href="#">Доступные заказы</a>
-          </li>
-          <li>
-            <a href="#">Заказы в работе</a>
-          </li>
-          <li>
-            <a href="#">Завершённые заказы</a>
-          </li>
-          <li>
-            <a href="#">Условия и положения</a>
-          </li>
-        </ul>
-      </nav>
+    <div class="menu-header-wrap">
+      <input id="menu-burger" ref="menu-burger" type="checkbox" @click="openMenu">
+      <label for="menu-burger" class="mobile-menu-burger">
+        <span class="mobile-menu-burger__line" />
+      </label>
+      <div class="menu-header">
+        <LoginHeader
+          :modal-show="modalShow"
+          class="menu-header-login"
+          @close-tooltip="closeMenu"
+          @modal-open="$emit('modal-open')"
+        />
+        <nav>
+          <ul role="menu">
+            <li>
+              <a href="#" @click="closeMenu">Доступные заказы</a>
+            </li>
+            <li>
+              <a href="#" @click="closeMenu">Заказы в работе</a>
+            </li>
+            <li>
+              <a href="#" @click="closeMenu">Завершённые заказы</a>
+            </li>
+            <li>
+              <a href="#" @click="closeMenu">Условия и положения</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </div>
 </template>
@@ -39,21 +46,45 @@ export default {
       type: Boolean,
       default: false
     }
+  },
+  methods: {
+    openMenu () {
+      if (matchMedia('(max-width:1024px)').matches) {
+        if (this.$refs['menu-burger'].checked) {
+          window.addEventListener('touchstart', this.overClick)
+        }
+      }
+    },
+    closeMenu () {
+      this.$refs['menu-burger'].checked = false
+    },
+    overClick (e) {
+      if (this.$refs['menu-burger'].checked) {
+        if (!e.target.closest('.menu-header-wrap')) {
+          this.removeEventClose()
+          this.closeMenu()
+        }
+      }
+    },
+    removeEventClose () {
+      window.removeEventListener('touchstart', this.overClick)
+    }
   }
 }
 </script>
 <style>
 @media screen and (max-width: 991px) {
-  .menu-header .header-login__icon{
+  .menu-header .header-login__icon {
     margin-right: 14px;
   }
 }
 </style>
 <style scoped lang="scss">
 
-.menu-header .header-login{
+.menu-header .header-login {
   display: none;
 }
+
 .menu-header ul {
   display: flex;
   justify-content: space-between;
@@ -68,6 +99,7 @@ export default {
     text-decoration: none;
     transition-duration: .2s;
     font-family: 'Montserrat', sans-serif;
+
     &:hover {
       color: scotch-color('primary');
     }
@@ -82,7 +114,7 @@ export default {
   .container {
     pointer-events: none;
   }
-  .menu-header .header-login{
+  .menu-header .header-login {
     display: inline-flex;
     flex-direction: row;
     margin-bottom: 46px;
@@ -99,9 +131,10 @@ export default {
     opacity: 0;
     transform: translateY(-100%);
 
-    ul{
+    ul {
       display: block;
     }
+
     li:not(:last-child) {
       margin-bottom: 18px;
     }
@@ -187,6 +220,12 @@ export default {
     transform: translateY(0);
     pointer-events: auto;
     z-index: 10;
+  }
+}
+
+@media screen and (max-width: 767px){
+  .mobile-menu-burger {
+    margin-top: 28px;
   }
 }
 </style>

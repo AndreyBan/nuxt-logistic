@@ -1,7 +1,7 @@
 <template>
   <!--  TODO: Класс gray-wrap--with-action добавлять только если есть кнопка или статус. gray-wrap--with-action-and-status если есть и кнопка и статус
   -->
-  <section class="block-lot__element gray-wrap gray-wrap--with-action">
+  <section class="block-lot__element gray-wrap gray-wrap--with-action-and-status">
     <div class="lot-number">
       № 00834
     </div>
@@ -38,12 +38,12 @@
         <div class="lot-info-date">
           с 18.04.2022 по 25.05.2022 12:00
         </div>
-        <div class="lot-info-wrap">
+        <div v-if="num%2===0" class="lot-info-wrap">
           <div class="lot-info-status lot-info-status--wait">
             На рассмотрении
           </div>
         </div>
-        <div class="lot-info-action">
+        <div v-else class="lot-info-action">
           <div class="btn btn--secondary">
             Подать заявку на перевозку
           </div>
@@ -61,6 +61,7 @@ export default {
   components: {
     ShowSvg
   },
+  // eslint-disable-next-line vue/require-prop-types
   props: ['num']
 
 }

@@ -20,13 +20,13 @@ export default {
     // TODO: Можно доработать через @click на .modal-window
     const overClick = (e) => {
       if (getComputedStyle(this.$refs.modal).opacity === '1') {
-        if (e.target.classList.contains('modal-window') || e.target.classList.contains('btn')) {
-          document.removeEventListener('click', overClick)
+        if (!e.target.closest('.modal-wrap') || e.target.classList.contains('btn')) {
+          this.$refs.modal.removeEventListener('click', overClick)
           this.closeModal()
         }
       }
     }
-    document.querySelector('.modal-window').addEventListener('click', overClick)
+    this.$refs.modal.addEventListener('click', overClick)
   },
   destroyed () {
     this.disableOverFlow('auto')
@@ -38,6 +38,8 @@ export default {
         document.querySelector('body').style.overflow = str
         document.querySelector('html').style.marginRight = margin
         document.querySelector('.main-header').style.paddingRight = margin
+      } else {
+        document.querySelector('body').style.overflow = str
       }
     },
     closeModal () {
@@ -128,10 +130,12 @@ export default {
 @media (max-width: 767px) {
   .modal-wrap {
     width: 100%;
+    margin: 0 16px;
   }
 
   .modal-close {
-    top: 36px;
+    top: 32px;
+    right: 32px;
   }
 }
 </style>
