@@ -10,7 +10,7 @@
           :modal-show="modalShow"
           class="menu-header-login"
           @close-tooltip="closeMenu"
-          @modal-open="$emit('modal-open')"
+          @modal-open="openPopup"
         />
         <nav>
           <ul role="menu">
@@ -48,6 +48,12 @@ export default {
     }
   },
   methods: {
+    openPopup () {
+      if (this.$refs['menu-burger'].checked) {
+        this.closeMenu()
+      }
+      this.$emit('modal-open')
+    },
     openMenu () {
       if (matchMedia('(max-width:1024px)').matches) {
         if (this.$refs['menu-burger'].checked) {

@@ -34,13 +34,21 @@ export default {
     this.visibilityTooltip()
   },
   methods: {
+    overClick (e) {
+      if (!e.target.closest('.bell-wrap')) {
+        document.removeEventListener('click', this.overClick)
+        this.closeNotify()
+      }
+    },
     visibilityTooltip () {
+      document.addEventListener('click', this.overClick)
+      setTimeout(() => this.closeNotify(), 10000)
+    },
+    closeNotify () {
+      this.eventHide = true
       setTimeout(() => {
-        this.eventHide = true
-        setTimeout(() => {
-          this.showTooltip = false
-        }, 400)
-      }, 10000)
+        this.showTooltip = false
+      }, 400)
     }
   }
 }
@@ -51,15 +59,17 @@ export default {
   width: 18px;
   height: 23px;
 
-  &-wrap{
+  &-wrap {
     display: block;
     position: relative;
     cursor: pointer;
+
     &:hover {
       color: #000000;
     }
   }
-  &-count{
+
+  &-count {
     position: absolute;
     top: -8px;
     right: -10px;
@@ -70,6 +80,7 @@ export default {
     height: 18px;
     border-radius: 50%;
   }
+
   &-tooltip {
     position: absolute;
     transform: translateX(calc(-50% + 9px));
@@ -82,9 +93,11 @@ export default {
     z-index: 1;
     opacity: 1;
     transition-duration: .3s;
+
     &-hide {
       opacity: 0;
     }
+
     &:after {
       content: '';
       position: absolute;
@@ -96,19 +109,23 @@ export default {
       background: url("/img/svg/tooltip-triangle.svg") 0 0 no-repeat;
       background-size: 56px;
     }
+
     &__icon {
       position: absolute;
       right: 32px;
       top: 43px;
     }
-    &__text{
+
+    &__text {
       max-width: 270px;
     }
-    &__date{
+
+    &__date {
       color: #878787;
     }
   }
 }
+
 @media screen and (max-width: 991px) {
   .bell {
     &-tooltip {
@@ -119,21 +136,25 @@ export default {
         left: 75%;
       }
     }
+
     &-wrap {
       margin-top: 2px;
     }
   }
 }
+
 @media screen and (max-width: 767px) {
   .bell {
     &-wrap {
       margin-top: 8px;
       margin-right: 24px;
     }
+
     &-tooltip {
       transform: translateX(calc(-60%));
       padding: 24px;
       width: 300px;
+
       &:after {
         left: 54%;
       }

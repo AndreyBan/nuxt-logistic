@@ -177,6 +177,10 @@ export default {
     pointer-events: none;
   }
 }
+.login-user {
+  width: 18px;
+  height: 23px;
+}
 
 @media screen and (max-width: 1420px) and (min-width: 1024px) {
   .header-login__tooltip {
