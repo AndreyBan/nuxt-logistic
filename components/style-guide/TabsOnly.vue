@@ -73,6 +73,12 @@ export default {
   display: flex;
   overflow: auto;
   padding-bottom: 10px;
+  &::-webkit-scrollbar-thumb {
+    background-color: transparent;
+  }
+  &::-webkit-scrollbar {
+    background-color: transparent;
+  }
 }
 .c-tabs-list a {
   text-decoration: none;
