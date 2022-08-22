@@ -1,9 +1,26 @@
 /***** Grid Container ****/
 
 $widthXL: 1272px;
-.container {
-  --padding-container: 26px;
+
+
+/**** Colors *****/
+
+$main-colors: (
+  'primary': #ED1C24,
+  'accent': #CCCCCC,
+  'secondary': #2F2F2F,
+  'dark': #000000,
+  'white': #FFF,
+  'dark-text': #000000,
+  'light': #FBFBFB,
+  'error': #F90F0F
+);
+
+
+@function scotch-color($key: 'primary') {
+  @return map-get($main-colors, $key);
 }
+
 
 /**** Buttons ****/
 
@@ -22,201 +39,40 @@ $btnSecondaryHoverText: scotch-color('white');
 $btnArrowWhite: url("/img/svg/arrow-right.svg") 0 0 no-repeat;
 $btnArrowRed: url("/img/svg/arrow-right-red.svg") 0 0 no-repeat;
 
-/**** Colors *****/
-
-$main-colors: (
-  'primary': #ED1C24,
-  'accent': #F1A94B,
-  'secondary': #2F2F2F,
-  'dark': #000000,
-  'white': #FFF,
-  'dark-text': #000000,
-  'light': #FBFBFB,
-  'foreground': #EBEBEB,
-  'background': #F9F9F9,
-  'error': #F90F0F
+$breakpoints: (
+  xl: 1279px,
+  lg: 1024px,
+  md: 991px,
+  sm: 767px,
+  xs: 576px
 );
 
-
-@function scotch-color($key: 'primary') {
-  @return map-get($main-colors, $key);
+@function breakpoints($key: xl) {
+  @return map-get($breakpoints, $key);
 }
 
+@mixin media ($sizeName: 'md') {
+  $size: breakpoints(md);
 
-/****** Margins ********/
-
-:root {
-  --element-margin-h: 8px;
-  --element-margin-v: 16px;
-  --element-margin-big: 24px;
-  --block-margin: 40px;
-  --section-margin: 56px;
-}
-
-
-// Sections
-.s {
-  &-pt {
-    padding-top: var(--section-margin);
+  @if($sizeName == 'xl') {
+    $size: breakpoints(xl);
+  } @else if($sizeName == 'lg') {
+    $size: breakpoints(lg);
+  } @else if($sizeName == 'md') {
+    $size: breakpoints(md);
+  } @else if($sizeName == 'sm') {
+    $size: breakpoints(sm);
+  } @else {
+    $size: breakpoints(xs);
   }
 
-  &-pb {
-    padding-bottom: var(--section-margin);
-  }
-
-  &-mt {
-    margin-top: var(--section-margin);
-  }
-
-  &-mb {
-    margin-bottom: var(--section-margin);
+  @media (max-width: $size) {
+    @content
   }
 }
-
-// Blocks
-
-.b {
-  &-pb {
-    padding-bottom: var(--block-margin);
-  }
-
-  &-pt {
-    padding-top: var(--block-margin);
-  }
-
-  &-mt {
-    margin-top: var(--block-margin);
-  }
-
-  &-mb {
-    margin-bottom: var(--block-margin);
-  }
-}
-
-// Elements
-
-.e {
-  &-big-pb {
-    padding-bottom: var(--element-margin-big);
-  }
-
-  &-big-pt {
-    padding-top: var(--element-margin-big);
-  }
-
-  &-pb {
-    padding-bottom: var(--element-margin-v);
-  }
-
-  &-pt {
-    padding-top: var(--element-margin-v);
-  }
-
-  &-pl {
-    padding-left: var(--element-margin-h);
-  }
-
-  &-pr {
-    padding-right: var(--element-margin-h);
-  }
-
-  &-big-mb {
-    margin-bottom: var(--element-margin-big);
-  }
-
-  &-big-mt {
-    margin-top: var(--element-margin-big);
-  }
-  &-big-mr {
-    margin-right: var(--element-margin-big);
-  }
-
-  &-big-ml {
-    margin-left: var(--element-margin-big);
-  }
-  &-mt {
-    margin-top: var(--element-margin-v);
-  }
-
-  &-mb {
-    margin-bottom: var(--element-margin-v);
-  }
-
-  &-mr {
-    margin-right: var(--element-margin-h);
-  }
-
-  &-ml {
-    margin-left: var(--element-margin-h);
-  }
-}
-
-@media screen and (max-width: 1024px) {
-  :root {
-    --block-margin: 32px;
-    --section-margin: 48px;
-  }
-  .container {
-    --padding-container: 24px;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  :root {
-    --block-margin: 24px;
-    --section-margin: 32px;
-  }
-}
-
 
 /**** Text *****/
 $font: 'Open Sans', sans-serif;
 $fontTitles: 'Montserrat', sans-serif;
 $fontSize: 14px;
-:root {
-  --fs-h1: 30px;
-  --fs-h2: 26px;
-  --fs-h3: 20px;
-}
 
-h1, h2, h3 {
-  padding: 0;
-  margin: 0;
-  font-family: $fontTitles;
-}
-
-h1 {
-  font-size: var(--fs-h1);
-  font-weight: bold;
-}
-
-h2 {
-  font-size: var(--fs-h2);
-  font-weight: bold;
-}
-
-h3 {
-  font-size: var(--fs-h3);
-}
-
-.align-center {
-  text-align: center;
-}
-
-@media screen and (max-width: 1024px) {
-  :root {
-    --fs-h1: 26px;
-    --fs-h2: 24px;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  :root {
-    --fs-h1: 18px;
-    --fs-h2: 16px;
-    --fs-h3: 14px;
-  }
-  .container {
-    --padding-container: 16px;
-  }
-}

@@ -222,14 +222,7 @@
       <h2 class="e-mb">
         Toggle switch
       </h2>
-      <div class="form-toggle-switch">
-        <input id="check-3" type="checkbox">
-        <label for="check-3">Toggle switch</label>
-      </div>
-      <div class="form-toggle-switch bg-dark b-mt">
-        <input id="check-4" type="checkbox">
-        <label for="check-4">Toggle switch</label>
-      </div>
+      <ToggleSwitch />
     </div>
     <div class="block">
       <h2 class="e-mb">
@@ -252,13 +245,14 @@
 import FormField from '@/components/style-guide/FormField'
 import TabsComponent from '@/components/style-guide/TabsComponent'
 import CheckboxComponent from '@/components/style-guide/CheckboxComponent'
-
+import ToggleSwitch from '@/components/style-guide/ToggleSwitch'
 export default {
   name: 'StyleGuide',
   components: {
     FormField,
     TabsComponent,
-    CheckboxComponent
+    CheckboxComponent,
+    ToggleSwitch
   },
   data () {
     return {

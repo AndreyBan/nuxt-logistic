@@ -340,7 +340,6 @@ export default {
   .checkbox-grid {
     display: grid;
     grid-template: 1fr 1fr / repeat(3, 1fr);
-    justify-content: space-between;
   }
   .fields-grid {
     grid-template: auto / 1fr 1fr;

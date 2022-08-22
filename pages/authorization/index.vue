@@ -19,7 +19,7 @@
             required="required"
             @input="resetError(form.password)"
           />
-          <div title="Показать пароль" @mousedown="toggleEye" @mouseup="toggleEye">
+          <div title="Показать пароль" @click="toggleEye">
             <ShowSvg :id="hidePassword ? 'eye-show' : 'eye-hide'" />
           </div>
         </div>
@@ -85,7 +85,7 @@ export default {
       }
       // TODO: Test
       if (!this.$v.form.login.value.$error && !this.$v.form.password.value.$error) {
-        if (this.form.login.value !== 'test' || this.form.password.value !== 'test') {
+        if (this.form.login.value.toLowerCase() !== 'test' || this.form.password.value.toLowerCase() !== 'test') {
           this.form.password.error = 'Введен неверный логин и/или пароль'
         } else {
           this.$store.commit('login/setLogin', true)

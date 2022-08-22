@@ -1,38 +1,56 @@
+@use "variables" as *;
+@use "components/elements/btns";
+@use "components/elements/form-elements";
+@use "components/elements/links";
+@use "components/elements/radio-button";
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Open+Sans:wght@300;400;500;600;700&display=swap');
-//@import "variables";
-@import "components/elements/btns";
-//@import "components/elements/checkbox";
-@import "components/elements/form-elements";
-@import "components/elements/links";
-@import "components/elements/radio-button";
-@import "components/elements/tabs";
-@import "components/elements/toggle-switch";
 
-*{
+* {
   box-sizing: border-box;
 }
-html, body{
+
+html, body {
   height: 100%;
 }
-body{
+
+body {
   margin: 0;
   padding: 153px 0 0 0;
   font-family: $font;
   font-size: $fontSize;
+
+  @include media('md') {
+    padding-top: 99px;
+  }
+  @include media('sm') {
+    padding-top: 84px;
+  }
 }
+
 ul, p {
   padding: 0;
   margin: 0;
 }
+
 main {
   flex: 1 0 auto;
 }
+
 .container {
+  --padding-container: 26px;
   width: 100%;
   max-width: $widthXL;
   margin: 0 auto;
   padding: 0 var(--padding-container);
+
+  @include media('lg') {
+    --padding-container: 24px;
+  }
+  @include media('sm') {
+    --padding-container: 16px;
+  }
 }
+
 .vs__search, .vs__search:focus {
   font-family: $font;
   font-size: 14px;
@@ -40,9 +58,11 @@ main {
   pointer-events: none;
   padding: 0 16px;
 }
-.vs__clear{
+
+.vs__clear {
   margin-right: 28px;
 }
+
 .pagination {
   display: flex;
   list-style: none;
@@ -64,6 +84,10 @@ main {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  @include media('xs') {
+    padding: 8px 18px;
+    margin: 0 2px;
+  }
 }
 
 .pagination li.active a {
@@ -84,19 +108,158 @@ main {
   opacity: .3;
 }
 
-@media screen and (max-width: 991px) {
-  body {
-    padding-top: 99px;
+
+/****** Margins ********/
+
+:root {
+  --element-margin-h: 8px;
+  --element-margin-v: 16px;
+  --element-margin-big: 24px;
+  --block-margin: 40px;
+  --section-margin: 56px;
+}
+
+
+// Sections
+.s {
+  &-pt {
+    padding-top: var(--section-margin);
+  }
+
+  &-pb {
+    padding-bottom: var(--section-margin);
+  }
+
+  &-mt {
+    margin-top: var(--section-margin);
+  }
+
+  &-mb {
+    margin-bottom: var(--section-margin);
   }
 }
-@media screen and (max-width: 767px) {
-  body {
-    padding-top: 84px;
+
+// Blocks
+
+.b {
+  &-pb {
+    padding-bottom: var(--block-margin);
+  }
+
+  &-pt {
+    padding-top: var(--block-margin);
+  }
+
+  &-mt {
+    margin-top: var(--block-margin);
+  }
+
+  &-mb {
+    margin-bottom: var(--block-margin);
   }
 }
-@media screen and (max-width: 576px) {
-  .pagination li a {
-    padding: 8px 18px;
-    margin: 0 2px;
+
+// Elements
+
+.e {
+  &-big-pb {
+    padding-bottom: var(--element-margin-big);
   }
+
+  &-big-pt {
+    padding-top: var(--element-margin-big);
+  }
+
+  &-pb {
+    padding-bottom: var(--element-margin-v);
+  }
+
+  &-pt {
+    padding-top: var(--element-margin-v);
+  }
+
+  &-pl {
+    padding-left: var(--element-margin-h);
+  }
+
+  &-pr {
+    padding-right: var(--element-margin-h);
+  }
+
+  &-big-mb {
+    margin-bottom: var(--element-margin-big);
+  }
+
+  &-big-mt {
+    margin-top: var(--element-margin-big);
+  }
+
+  &-big-mr {
+    margin-right: var(--element-margin-big);
+  }
+
+  &-big-ml {
+    margin-left: var(--element-margin-big);
+  }
+
+  &-mt {
+    margin-top: var(--element-margin-v);
+  }
+
+  &-mb {
+    margin-bottom: var(--element-margin-v);
+  }
+
+  &-mr {
+    margin-right: var(--element-margin-h);
+  }
+
+  &-ml {
+    margin-left: var(--element-margin-h);
+  }
+}
+
+:root {
+  --fs-h1: 30px;
+  --fs-h2: 26px;
+  --fs-h3: 20px;
+
+
+  @include media('lg') {
+    --block-margin: 32px;
+    --section-margin: 48px;
+    --fs-h1: 26px;
+    --fs-h2: 24px;
+  }
+  @include media('sm') {
+    --fs-h1: 18px;
+    --fs-h2: 16px;
+    --fs-h3: 14px;
+    --block-margin: 24px;
+    --section-margin: 32px;
+  }
+}
+
+h1, h2, h3 {
+  padding: 0;
+  margin: 0;
+  font-family: $fontTitles;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  font-weight: bold;
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  font-weight: bold;
+}
+
+h3 {
+  font-size: var(--fs-h3);
+}
+
+.align-center {
+  text-align: center;
 }

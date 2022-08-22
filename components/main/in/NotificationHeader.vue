@@ -139,6 +139,7 @@ export default {
 
     &-wrap {
       margin-top: 2px;
+      margin-right: 24px;
     }
   }
 }

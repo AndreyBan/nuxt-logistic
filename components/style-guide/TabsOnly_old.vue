@@ -1,18 +1,20 @@
 <template>
-  <section class="c-tabs">
-    <ul class="c-tabs-list">
-      <li
-        v-for="(i, key) in contentData"
-        ref="myTabs"
-        :key="key"
-        :class="{'active': (onHash && ($route.hash === '#content-' + key || !$route.hash && !key) || !onHash && !key)}"
-        @click="setActiveClass"
-      >
-        <a v-if="onHash" :href="'#content-' + key">{{ i }}</a>
-        <a v-else :href="'#content-' + key" @click.prevent>{{ i }}</a>
-      </li>
-    </ul>
-  </section>
+  <div>
+    <section class="c-tabs">
+      <ul class="c-tabs-list">
+        <li
+          v-for="(i, key) in contentData"
+          ref="myTabs"
+          :key="key"
+          :class="{'active': (onHash && ($route.hash === '#content-' + key || !$route.hash && !key) || !onHash && !key)}"
+          @click="setActiveClass"
+        >
+          <a v-if="onHash" :href="'#content-' + key">{{ i }}</a>
+          <a v-else :href="'#content-' + key" @click.prevent>{{ i }}</a>
+        </li>
+      </ul>
+    </section>
+  </div>
 </template>
 
 <script>
@@ -69,24 +71,57 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@use "/assets/scss/variables" as *;
+
 .c-tabs-list {
   display: flex;
   overflow: auto;
-  padding-bottom: 10px;
+  padding-bottom: 4px;
+  list-style: none;
+  font-size: 16px;
+  font-weight: 600;
+
   &::-webkit-scrollbar-thumb {
     background-color: transparent;
   }
+
   &::-webkit-scrollbar {
     background-color: transparent;
   }
-}
-.c-tabs-list a {
-  text-decoration: none;
-  white-space: nowrap;
 
-  &:visited,
-  &:active {
-    color: inherit;
+  a {
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:visited,
+    &:active {
+      color: inherit;
+    }
+  }
+
+  li {
+    display: inline-block;
+    position: relative;
+    cursor: pointer;
+    padding-bottom: 4px;
+
+    &:not(:last-child) {
+      margin-right: 28px;
+    }
+
+    &.active {
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        bottom: -4px;
+        height: 5px;
+        width: 100%;
+        background-color: scotch-color('primary');
+        border-radius: 22px;
+      }
+    }
   }
 }
 </style>

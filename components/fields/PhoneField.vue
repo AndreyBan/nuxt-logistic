@@ -20,7 +20,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, minLength } from 'vuelidate/lib/validators'
-import { mixinCheckError } from '@/mixins/AppMixins'
+import { mixinCheckError } from '@/mixins/FieldMixins'
 
 export default {
   name: 'InnField',

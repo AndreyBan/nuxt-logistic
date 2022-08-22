@@ -1,4 +1,41 @@
-@import "../../variables.scss";
+<template>
+  <div class="form-toggle-switch">
+    <input
+      type="checkbox"
+      :checked="checked"
+    >
+    <label @click="changeCheckbox">{{ label }}</label>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'ToggleSwitch',
+  props: {
+    value: {
+      type: Boolean,
+      default: false
+    },
+    label: {
+      type: String,
+      default: 'Toggle switch'
+    }
+  },
+  data () {
+    return {
+      checked: this.value
+    }
+  },
+  methods: {
+    changeCheckbox () {
+      this.checked = !this.checked
+      this.$emit('input', this.checked)
+    }
+  }
+}
+</script>
+
+<style scoped lang="scss">
 
 .form-toggle-switch {
   input {
@@ -30,7 +67,7 @@
       content: '';
       position: absolute;
       left: 0;
-      margin-top: -4px;
+      margin-top: -3px;
       width: 44px;
       height: 24px;
       border-radius: 100px;
@@ -42,7 +79,7 @@
       content: '';
       position: absolute;
       left: 2px;
-      margin-top: -2px;
+      margin-top: -1px;
       width: 22px;
       height: 22px;
       background-color: #CCCCCC;
@@ -86,3 +123,5 @@
     }
   }
 }
+
+</style>

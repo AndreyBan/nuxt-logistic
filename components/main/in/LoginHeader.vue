@@ -12,7 +12,7 @@
     </div>
     <span v-if="!isLogin" class="header-login__link">Войти</span>
     <div v-show="showTooltip" class="header-login__tooltip">
-      <NuxtLink to="#"><span @click="emitCloseTooltip">Настройка профиля</span></NuxtLink>
+      <NuxtLink to="/profile/"><span @click="emitCloseTooltip">Настройка профиля</span></NuxtLink>
       <div class="logout" @click="logout">Выход</div>
     </div>
   </a>

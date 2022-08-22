@@ -27,7 +27,7 @@
 <script>
 import { validationMixin } from 'vuelidate'
 import { required, maxLength } from 'vuelidate/lib/validators'
-import { mixinCheckError } from '@/mixins/AppMixins'
+import { mixinCheckError } from '@/mixins/FieldMixins'
 
 const checkCyrillic = value => !/([A-z])+/g.test(value)
 const checkLatin = value => !/([А-яёЁ])+/g.test(value)

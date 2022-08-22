@@ -4,6 +4,7 @@
       :id="id"
       v-model="checkValue"
       type="checkbox"
+      v-bind="$attrs"
       :checked="!!checked"
       @change="$emit('get-value', {[id]: {checked: checkValue, value: label}})"
     >
@@ -18,6 +19,7 @@
 <script>
 export default {
   name: 'CheckboxComponent',
+  inheritAttrs: false,
   props: {
     id: {
       type: [String, Number],
@@ -45,7 +47,7 @@ export default {
       }
     },
     checked: {
-      type: String,
+      type: [Boolean, String],
       default: ''
     }
   },
@@ -83,6 +85,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+@use "/assets/scss/variables" as *;
+
 .form-checkbox {
   position: relative;
   .error-text {
@@ -95,6 +99,15 @@ export default {
   }
   input {
     display: none;
+    &:disabled {
+      &:checked + label:before {
+        background-color: scotch-color('accent');
+        border: 1px solid scotch-color('accent');
+      }
+      &+ label:hover:before {
+        border: 1px solid scotch-color('accent');
+      }
+    }
 
     & + label:after {
       content: '';

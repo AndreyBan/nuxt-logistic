@@ -1,45 +1,46 @@
 <template>
   <div class="container">
     <div class="s-mt b-mb">
-      <TabsOnly :content-data="tabs" @get-active-tab="getActiveTab" />
-    </div>
-    <template v-if="!activeIndexTab">
-      <FilterComponent class="b-mb" />
-      <!--    Access orders-->
-      <div class="s-mb">
-        <LotComponent v-for="i in showLots" :key="i" :num="i" />
-        <v-paginate
-          v-if="lots > showCount * 2 && !showMore"
-          :click-handler="clickCallback"
-          :page-count="getCount"
-          :page-range="3"
-          :margin-pages="2"
-          :prev-text="'<'"
-          :next-text="'>'"
-          :container-class="'pagination'"
-          :page-class="'page-item'"
-        />
-        <div v-if="showMore" class="btn-wrap">
-          <div class="btn btn--w-auto btn--primary" @click="showMoreAction">
-            Показать еще
+      <TabsComponent :content-data="tabs">
+        <template #content-0>
+          <FilterComponent class="b-mb" />
+          <!--    Access orders-->
+          <div class="s-mb">
+            <LotComponent v-for="i in showLots" :key="i" :num="i" />
+            <v-paginate
+              v-if="lots > showCount * 2 && !showMore"
+              :click-handler="clickCallback"
+              :page-count="getCount"
+              :page-range="3"
+              :margin-pages="2"
+              :prev-text="'<'"
+              :next-text="'>'"
+              :container-class="'pagination'"
+              :page-class="'page-item'"
+            />
+            <div v-if="showMore" class="btn-wrap">
+              <div class="btn btn--w-auto btn--primary" @click="showMoreAction">
+                Показать еще
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </template>
+        </template>
+      </TabsComponent>
+    </div>
   </div>
 </template>
 
 <script>
 import FilterComponent from '@/components/main/in/FilterComponent'
 import LotComponent from '@/components/main/in/LotComponent'
-import TabsOnly from '@/components/style-guide/TabsOnly'
+import TabsComponent from '@/components/style-guide/TabsComponent'
 
 export default {
   name: 'ListLots',
   components: {
     FilterComponent,
     LotComponent,
-    TabsOnly
+    TabsComponent
   },
   data () {
     return {
@@ -48,7 +49,6 @@ export default {
         'Заказы в работе',
         'Завершенные заказы'
       ],
-      activeIndexTab: 0,
       lots: 24,
       showLots: [],
       showMore: true,
@@ -64,9 +64,6 @@ export default {
     this.getShowLots()
   },
   methods: {
-    getActiveTab (index) {
-      this.activeIndexTab = index
-    },
     showMoreAction () {
       this.showMore = false
       this.showCount = this.showCount * 2
@@ -106,6 +103,7 @@ export default {
     }
   }
 }
+
 .btn-wrap {
   text-align: center;
 }
