@@ -1,11 +1,11 @@
 <template>
   <div>
-    <AddButton @click="addCard">
+    <AddButton @click="newCard = true">
       Добавить водителя
     </AddButton>
     <section class="drivers">
       <div class="drivers-wrap b-mt">
-        <DriverCard v-show="newCard" />
+        <DriverCard v-if="newCard" />
         <DriverCard
           v-for="(el, i) in driverCards"
           :key="i"
@@ -29,11 +29,6 @@ export default {
   data () {
     return {
       newCard: false
-    }
-  },
-  methods: {
-    addCard () {
-      this.newCard = true
     }
   }
 }

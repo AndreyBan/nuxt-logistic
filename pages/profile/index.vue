@@ -10,6 +10,9 @@
           <template #content-1>
             <DriversData />
           </template>
+          <template #content-2>
+            <TractorsData />
+          </template>
         </TabsComponent>
       </div>
     </div>
@@ -21,13 +24,14 @@ import { mixinTabs } from '@/mixins/TabsMixins'
 import TabsComponent from '@/components/style-guide/TabsComponent'
 import OrganizationData from '@/components/pages/profile/OrganizationData'
 import DriversData from '@/components/pages/profile/DriversData'
-
+import TractorsData from '@/components/pages/profile/TractorsData'
 export default {
   name: 'ProfilePage',
   components: {
     DriversData,
     TabsComponent,
-    OrganizationData
+    OrganizationData,
+    TractorsData
   },
   mixins: [mixinTabs],
   provide () {
@@ -93,6 +97,24 @@ export default {
             }
           },
           actual: false
+        }
+      },
+      tractors: {
+        123: {
+          model: {
+            title: 'Модель',
+            value: '1/43 Mercedes-Benz Actros'
+          },
+          number: {
+            title: 'Гос номер тягача',
+            value: 'А777АА 152'
+          },
+          options: [
+            '1/43 Mercedes-Benz Actros',
+            '1/43 Mercedes-Benz Actros',
+            '1/43 Mercedes-Benz Actros'
+          ],
+          actual: true
         }
       }
     }

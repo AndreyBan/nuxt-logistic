@@ -68,7 +68,7 @@
         <div class="drivers-card-bottom__actual">
           <ToggleSwitch v-model="dataCard.actual" :label="dataCard.actual ? 'Актуален' : 'Не актуален'" />
         </div>
-        <div class="drivers-card-edit e-mt" @click="toggleEdit">
+        <div class="drivers-card-edit e-mt" @click="edit = !edit">
           <div v-if="!edit">
             <ShowSvg id="icon-edit" />
             Редактировать
@@ -79,7 +79,7 @@
         </div>
       </div>
     </div>
-    <div v-if="dropTablet" class="drop-text" @click="toggleDrop">
+    <div v-if="dropTablet" class="drop-text" @click="dropOpen = !dropOpen">
       {{ textDrop }}
     </div>
   </div>
@@ -180,14 +180,6 @@ export default {
   created () {
     if (matchMedia('(max-width: 1279px)').matches) {
       this.dropTablet = true
-    }
-  },
-  methods: {
-    toggleDrop () {
-      this.dropOpen = !this.dropOpen
-    },
-    toggleEdit () {
-      this.edit = !this.edit
     }
   }
 }
@@ -422,6 +414,7 @@ export default {
 .icon-edit {
   width: 15px;
   height: 14px;
+  margin-right: 5px;
 }
 
 .drop-text {
