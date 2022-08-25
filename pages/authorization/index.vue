@@ -20,7 +20,7 @@
             @input="resetError(form.password)"
           />
           <div title="Показать пароль" @click="toggleEye">
-            <ShowSvg :id="hidePassword ? 'eye-show' : 'eye-hide'" />
+            <ShowSvg :id="hidePassword ? 'eye-hide' : 'eye-show'" />
           </div>
         </div>
         <button type="submit" class="btn btn--primary btn--w-auto">

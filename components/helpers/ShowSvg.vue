@@ -1,5 +1,5 @@
 <template>
-  <svg :class="iconClass ? iconClass : id">
+  <svg :class="iconClass ? iconClass : id" @click="$emit('click')">
     <use xmlns="http://www.w3.org/2000/svg" :xlink:href="`/img/svg/map.svg#${getId}`" />
   </svg>
 </template>

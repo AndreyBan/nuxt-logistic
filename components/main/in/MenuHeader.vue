@@ -1,7 +1,12 @@
 <template>
   <div class="container">
     <div class="menu-header-wrap">
-      <input id="menu-burger" ref="menu-burger" type="checkbox" @click="openMenu">
+      <input
+        id="menu-burger"
+        ref="menu-burger"
+        type="checkbox"
+        @click="openMenu"
+      >
       <label for="menu-burger" class="mobile-menu-burger">
         <span class="mobile-menu-burger__line" />
       </label>
@@ -14,17 +19,8 @@
         />
         <nav>
           <ul role="menu">
-            <li>
-              <a href="#" @click="closeMenu">Доступные заказы</a>
-            </li>
-            <li>
-              <a href="#" @click="closeMenu">Заказы в работе</a>
-            </li>
-            <li>
-              <a href="#" @click="closeMenu">Завершённые заказы</a>
-            </li>
-            <li>
-              <a href="#" @click="closeMenu">Условия и положения</a>
+            <li v-for="(el, i) in menuLinks" :key="i">
+              <a :href="el.link" @click="closeMenu">{{ el.text }}</a>
             </li>
           </ul>
         </nav>
@@ -45,6 +41,28 @@ export default {
     modalShow: {
       type: Boolean,
       default: false
+    }
+  },
+  data () {
+    return {
+      menuLinks: {
+        0: {
+          text: 'Доступные заказы',
+          link: '#'
+        },
+        1: {
+          text: 'Заказы в работе',
+          link: '#'
+        },
+        2: {
+          text: 'Завершённые заказы',
+          link: '#'
+        },
+        3: {
+          text: 'Условия и положения',
+          link: '#'
+        }
+      }
     }
   },
   methods: {

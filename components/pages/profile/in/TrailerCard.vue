@@ -56,7 +56,7 @@
 <script>
 import ToggleSwitch from '@/components/style-guide/ToggleSwitch'
 import ShowSvg from '@/components/helpers/ShowSvg'
-
+// TODO: Подумать как привести к одному компоненту с TractorsCard
 export default {
   name: 'TractorCard',
   components: {
@@ -69,11 +69,11 @@ export default {
       default () {
         return {
           model: {
-            title: 'Модель тягача',
+            title: 'Модель прицепа',
             value: ''
           },
           number: {
-            title: 'Гос номер тягача',
+            title: 'Гос номер прицепа',
             value: ''
           },
           options: [

@@ -7,7 +7,7 @@
       <div class="drivers-wrap b-mt">
         <DriverCard v-if="newCard" />
         <DriverCard
-          v-for="(el, i) in driverCards"
+          v-for="(el, i) in sortData"
           :key="i"
           :driver-card="el"
         />
@@ -29,6 +29,21 @@ export default {
   data () {
     return {
       newCard: false
+    }
+  },
+  computed: {
+    sortData () {
+      const data = this.driverCards
+      const actual = []
+      const noActual = []
+      for (const i in data) {
+        if (data[i].actual) {
+          actual.push({ id: i, ...data[i] })
+        } else {
+          noActual.push({ id: i, ...data[i] })
+        }
+      }
+      return [...actual, ...noActual]
     }
   }
 }

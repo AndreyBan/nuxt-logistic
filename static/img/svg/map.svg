@@ -41,4 +41,10 @@
     <circle r="4.91429" transform="matrix(-1 0 0 1 23.5999 17.9143)" stroke="#ED1C24" stroke-width="1.5"/>
     <path d="M15 30.1197C15 29.0627 15.6645 28.1198 16.6599 27.7643V27.7643C21.1478 26.1615 26.0522 26.1615 30.5401 27.7643V27.7643C31.5355 28.1198 32.2 29.0627 32.2 30.1197V32.194C32.2 33.4111 31.122 34.346 29.9172 34.1739L27.4184 33.8169C24.8856 33.4551 22.3144 33.4551 19.7816 33.8169L17.2828 34.1739C16.078 34.346 15 33.4111 15 32.194V30.1197Z" stroke="#ED1C24" stroke-width="1.5"/>
   </symbol>
+  <symbol id="icon-info" viewBox="0 0 22 22" fill="none">
+    <rect x="1" y="1" width="20" height="20" rx="10" stroke="#ED1C24" stroke-width="1.5"/>
+    <path d="M11.5 16L11.5 10" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M9.5 10L11.5 10" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M11.5 7L11.5 6" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
 </svg>

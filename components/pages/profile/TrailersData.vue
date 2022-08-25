@@ -1,12 +1,12 @@
 <template>
   <div>
     <AddButton @click="newCard = true">
-      Добавить тягач
+      Добавить прицеп
     </AddButton>
     <section class="tractors b-mt">
-      <TractorCard v-if="newCard" @cancel="newCard = false" />
-      <TractorCard
-        v-for="(el, i) in sortData(tractors)"
+      <TrailerCard v-if="newCard" @cancel="newCard = false" />
+      <TrailerCard
+        v-for="(el, i) in sortData(trailers)"
         :key="i"
         :tractor-data="el"
       />
@@ -15,18 +15,18 @@
 </template>
 
 <script>
-import { mixinSortActual } from '../../../mixins/DataMixins'
+import { mixinSortActual } from '@/mixins/DataMixins'
 import AddButton from '@/components/style-guide/AddButton'
-import TractorCard from '@/components/pages/profile/in/TractorCard'
+import TrailerCard from '@/components/pages/profile/in/TrailerCard'
 
 export default {
   name: 'DriversData',
   components: {
     AddButton,
-    TractorCard
+    TrailerCard
   },
   mixins: [mixinSortActual],
-  inject: ['tractors'],
+  inject: ['trailers'],
   data () {
     return {
       newCard: false
