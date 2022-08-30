@@ -17,6 +17,8 @@
 </template>
 
 <script>
+
+import { mixinSortActual } from '~/mixins/DataMixins'
 import AddButton from '@/components/style-guide/AddButton'
 import DriverCard from '@/components/pages/profile/in/DriverCard'
 export default {
@@ -25,25 +27,13 @@ export default {
     AddButton,
     DriverCard
   },
+  mixins: [
+    mixinSortActual
+  ],
   inject: ['driverCards'],
   data () {
     return {
       newCard: false
-    }
-  },
-  computed: {
-    sortData () {
-      const data = this.driverCards
-      const actual = []
-      const noActual = []
-      for (const i in data) {
-        if (data[i].actual) {
-          actual.push({ id: i, ...data[i] })
-        } else {
-          noActual.push({ id: i, ...data[i] })
-        }
-      }
-      return [...actual, ...noActual]
     }
   }
 }

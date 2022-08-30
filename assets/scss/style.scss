@@ -3,7 +3,7 @@
 @use "components/elements/form-elements";
 @use "components/elements/links";
 @use "components/elements/radio-button";
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Open+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
 * {
   box-sizing: border-box;
@@ -248,7 +248,7 @@ h1, h2, h3 {
 
 h1 {
   font-size: var(--fs-h1);
-  font-weight: bold;
+  font-weight: 700;
 }
 
 h2 {

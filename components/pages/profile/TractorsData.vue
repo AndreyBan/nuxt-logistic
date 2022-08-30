@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { mixinSortActual } from '../../../mixins/DataMixins'
+import { mixinSortActual } from '~/mixins/DataMixins'
 import AddButton from '@/components/style-guide/AddButton'
 import TractorCard from '@/components/pages/profile/in/TractorCard'
 

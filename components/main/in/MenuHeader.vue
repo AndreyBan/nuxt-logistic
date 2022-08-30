@@ -20,7 +20,9 @@
         <nav>
           <ul role="menu">
             <li v-for="(el, i) in menuLinks" :key="i">
-              <a :href="el.link" @click="closeMenu">{{ el.text }}</a>
+              <nuxt-link :to="el.link" @click="closeMenu">
+                {{ el.text }}
+              </nuxt-link>
             </li>
           </ul>
         </nav>
@@ -48,11 +50,11 @@ export default {
       menuLinks: {
         0: {
           text: 'Доступные заказы',
-          link: '#'
+          link: '/access-order/'
         },
         1: {
           text: 'Заказы в работе',
-          link: '#'
+          link: '/done-order/'
         },
         2: {
           text: 'Завершённые заказы',
