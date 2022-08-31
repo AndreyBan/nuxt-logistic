@@ -20,7 +20,7 @@
         <nav>
           <ul role="menu">
             <li v-for="(el, i) in menuLinks" :key="i">
-              <nuxt-link :to="el.link" @click="closeMenu">
+              <nuxt-link :to="el.link" :class="{'disabled': el.disabled}" @click="closeMenu">
                 {{ el.text }}
               </nuxt-link>
             </li>
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { mixinIsLogin } from '@/mixins/LoginMixins'
 import LoginHeader from '@/components/main/in/LoginHeader'
 
 export default {
@@ -39,30 +40,37 @@ export default {
   components: {
     LoginHeader
   },
+  mixins: [
+    mixinIsLogin
+  ],
   props: {
     modalShow: {
       type: Boolean,
       default: false
     }
   },
-  data () {
-    return {
-      menuLinks: {
+  computed: {
+    menuLinks () {
+      return {
         0: {
           text: 'Доступные заказы',
-          link: '/access-order/'
+          link: '/access-order/',
+          disabled: !this.isLogin
         },
         1: {
           text: 'Заказы в работе',
-          link: '/done-order/'
+          link: '/done-order/',
+          disabled: !this.isLogin
         },
         2: {
           text: 'Завершённые заказы',
-          link: '#'
+          link: '#',
+          disabled: !this.isLogin
         },
         3: {
           text: 'Условия и положения',
-          link: '#'
+          link: '#',
+          disabled: false
         }
       }
     }
@@ -106,6 +114,10 @@ export default {
 }
 </style>
 <style scoped lang="scss">
+.disabled {
+  opacity: .5;
+  pointer-events: none;
+}
 
 .menu-header .header-login {
   display: none;
@@ -125,6 +137,10 @@ export default {
     text-decoration: none;
     transition-duration: .2s;
     font-family: 'Montserrat', sans-serif;
+
+    &.nuxt-link-active {
+      color: scotch-color('primary');
+    }
 
     &:hover {
       color: scotch-color('primary');
@@ -249,7 +265,7 @@ export default {
   }
 }
 
-@media screen and (max-width: 767px){
+@media screen and (max-width: 767px) {
   .mobile-menu-burger {
     margin-top: 28px;
   }

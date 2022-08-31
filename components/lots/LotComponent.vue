@@ -125,15 +125,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@mixin status($bg) {
-  background-color: $bg;
-  position: relative;
-  text-align: center;
-  padding: 6px 14px;
-  border-radius: 25px;
-  font-weight: 600;
-}
-
 .block-lot__element:not(:last-child) {
   margin-bottom: 22px;
 }

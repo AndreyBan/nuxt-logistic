@@ -56,14 +56,16 @@ $breakpoints: (
 
   @if($sizeName == 'xl') {
     $size: breakpoints(xl);
-  } @else if($sizeName == 'lg') {
+  } @else if ($sizeName == 'lg') {
     $size: breakpoints(lg);
-  } @else if($sizeName == 'md') {
+  } @else if ($sizeName == 'md') {
     $size: breakpoints(md);
-  } @else if($sizeName == 'sm') {
+  } @else if ($sizeName == 'sm') {
     $size: breakpoints(sm);
-  } @else {
+  } @else if ($sizeName == 'xs'){
     $size: breakpoints(xs);
+  } @else {
+    $size: $sizeName + 'px';
   }
 
   @media (max-width: $size) {

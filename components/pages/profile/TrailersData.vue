@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AddButton @click="newCard = true">
+    <AddButton :class="{'disabled': newCard}" @click="newCard = true">
       Добавить прицеп
     </AddButton>
     <section class="tractors b-mt">
@@ -44,5 +44,9 @@ export default {
   @include media('xl') {
     grid-template: auto / 1fr;
   }
+}
+.disabled {
+  opacity: .5;
+  pointer-events: none;
 }
 </style>

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <AddButton @click="newCard = true">
+    <AddButton :class="{'disabled': newCard}" @click="newCard = true">
       Добавить водителя
     </AddButton>
     <section class="drivers">
       <div class="drivers-wrap b-mt">
-        <DriverCard v-if="newCard" />
+        <DriverCard v-if="newCard" @cancel="newCard = false" />
         <DriverCard
-          v-for="(el, i) in sortData"
+          v-for="(el, i) in sortData(driverCards)"
           :key="i"
           :driver-card="el"
         />
@@ -42,5 +42,9 @@ export default {
 <style scoped lang="scss">
 .drivers {
   line-height: 150%;
+}
+.disabled {
+  opacity: .5;
+  pointer-events: none;
 }
 </style>

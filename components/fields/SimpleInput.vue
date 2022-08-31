@@ -9,12 +9,18 @@
     >
     <label>{{ label }} <span v-if="required">*</span></label>
     <span class="error-text">{{ error }}</span>
+    <ShowSvg v-if="!!iconId" :id="iconId" class="icon-field" />
   </div>
 </template>
 
 <script>
+import ShowSvg from '@/components/helpers/ShowSvg'
+
 export default {
   name: 'SimpleInput',
+  components: {
+    ShowSvg
+  },
   inheritAttrs: false,
   props: {
     label: {
@@ -32,6 +38,10 @@ export default {
     value: {
       type: String,
       default: ''
+    },
+    iconId: {
+      type: String,
+      default: ''
     }
   }
 }
@@ -42,6 +52,14 @@ $colorBorder: #CCCCCC;
 $colorBorderHover: #878787;
 $colorError: #F90F0F;
 $borderRadius: 25px;
+
+.icon-field {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  right: 20px;
+  top: 11px;
+}
 
 .form-field {
   position: relative;

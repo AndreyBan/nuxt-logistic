@@ -7,12 +7,14 @@
       v-bind="$attrs"
       inputmode="numeric"
       autocomplete="off"
+      :placeholder="placeholder"
       :class="{'valid': !!field, 'error': $v.field.$error}"
       @change="$v.field.$touch()"
       @blur="$v.field.$touch()"
     >
     <label>{{ label }} <span v-if="$v.field.required !== undefined">*</span></label>
     <span class="error-text">{{ errorText }}</span>
+    <ShowSvg v-if="!!iconId" :id="iconId" class="icon-field" />
   </div>
 </template>
 
@@ -20,9 +22,12 @@
 import { validationMixin } from 'vuelidate'
 import { required, minLength } from 'vuelidate/lib/validators'
 import { mixinCheckError } from '@/mixins/FieldMixins'
-
+import ShowSvg from '@/components/helpers/ShowSvg'
 export default {
   name: 'InnField',
+  components: {
+    ShowSvg
+  },
   mixins: [validationMixin, mixinCheckError],
   inheritAttrs: false,
   props: {
@@ -34,9 +39,17 @@ export default {
       type: String,
       default: 'ИНН'
     },
+    placeholder: {
+      type: String,
+      default: ''
+    },
     maskTemplate: {
       type: String,
       default: '##########'
+    },
+    iconId: {
+      type: String,
+      default: ''
     },
     minLength: {
       type: Number,
@@ -76,7 +89,13 @@ export default {
   padding-bottom: 16px;
   display: flex;
 }
-
+.icon-field {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  right: 20px;
+  top: 11px;
+}
 @media screen and (max-width: 767px) {
   .form-field {
     margin-bottom: 14px;

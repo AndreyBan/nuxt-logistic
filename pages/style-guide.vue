@@ -242,7 +242,7 @@
 </template>
 
 <script>
-import FormField from '@/components/style-guide/FormField'
+import FormField from '@/components/fields/FormField'
 import TabsComponent from '@/components/style-guide/TabsComponent'
 import CheckboxComponent from '@/components/style-guide/CheckboxComponent'
 import ToggleSwitch from '@/components/style-guide/ToggleSwitch'

@@ -64,7 +64,7 @@
           </p>
         </div>
       </div>
-      <div class="drivers-card-bottom">
+      <div class="drivers-card-bottom e-mt">
         <div class="drivers-card-bottom__actual">
           <ToggleSwitch v-model="dataCard.actual" :label="dataCard.actual ? 'Актуален' : 'Не актуален'" />
         </div>
@@ -75,6 +75,9 @@
           </div>
           <div v-else class="btn btn--secondary">
             Сохранить изменения
+          </div>
+          <div v-if="!!dataCard.newCard && edit" class="btn btn--primary e-mt" @click="cancelAdd">
+            Отменить
           </div>
         </div>
       </div>
@@ -180,6 +183,12 @@ export default {
   created () {
     if (matchMedia('(max-width: 1279px)').matches) {
       this.dropTablet = true
+    }
+  },
+  methods: {
+    cancelAdd () {
+      this.edit = false
+      this.$emit('cancel')
     }
   }
 }
@@ -401,6 +410,7 @@ export default {
 
   &-edit {
     cursor: pointer;
+    max-width: 210px;
   }
 
   &__name {

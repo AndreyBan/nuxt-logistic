@@ -47,4 +47,20 @@
     <path d="M9.5 10L11.5 10" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     <path d="M11.5 7L11.5 6" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
   </symbol>
+  <symbol id="icon-calendar" viewBox="0 0 16 17" fill="none">
+    <rect x="1.1543" y="2.15386" width="13.8462" height="13.8462" rx="3" stroke="#ED1C24" stroke-width="1.5"/>
+    <path d="M1.1543 5.99999H15.0004" stroke="#ED1C24" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M11.5389 1L11.5389 3.30769" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M4.61508 1L4.61508 3.30769" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M3.8457 9.07694H4.61493" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M7.69141 9.07694H8.46064" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M11.5391 9.07694H12.3083" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M3.8457 12.1539H4.61493" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M7.69141 12.1539H8.46064" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M11.5391 12.1539H12.3083" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="icon-search" viewBox="0 0 16 16" fill="none">
+    <circle cx="6.76898" cy="6.64007" r="5.89007" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M10.8184 11.0267L14.4997 14.708" stroke="#ED1C24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </symbol>
 </svg>

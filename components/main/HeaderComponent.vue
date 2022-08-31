@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { mixinIsLogin } from '@/mixins/LoginMixins'
 import MenuHeader from '@/components/main/in/MenuHeader'
 import LoginHeader from '@/components/main/in/LoginHeader'
 import AppModalWindow from '@/components/main/AppModalWindow'
@@ -42,14 +43,12 @@ export default {
     AuthComponent,
     NotificationHeader
   },
+  mixins: [
+    mixinIsLogin
+  ],
   data () {
     return {
       modalShow: false
-    }
-  },
-  computed: {
-    isLogin () {
-      return this.$store.state.login.login
     }
   },
   beforeCreate () {

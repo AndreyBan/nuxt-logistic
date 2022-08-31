@@ -14,6 +14,7 @@
         </li>
       </ul>
     </section>
+    <slot name="static" />
     <section class="contents-wrap">
       <div
         v-for="(i, key) in contentData"
@@ -34,7 +35,7 @@ export default {
     contentData: {
       type: Array,
       required: true,
-      default: Object
+      default: () => []
     },
     onHash: {
       type: Boolean,
