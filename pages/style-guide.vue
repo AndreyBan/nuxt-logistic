@@ -238,6 +238,20 @@
         <label for="radio-2">Radio button</label>
       </div>
     </div>
+    <div class="block">
+      <h2 class="e-mb">
+        Badge
+      </h2>
+      <div>
+        <span class="badge badge-primary">primary</span>
+        <span class="badge badge-success">success</span>
+        <span class="badge badge-secondary">secondary</span>
+      </div>
+      <div class="title-badge b-mt">
+        <h3>Title</h3>
+        <span class="badge badge-secondary">secondary</span>
+      </div>
+    </div>
   </div>
 </template>
 
