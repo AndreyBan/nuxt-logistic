@@ -5,6 +5,9 @@
         <template #content-0>
           <AccessLots />
         </template>
+        <template #content-1>
+          <DoneLots />
+        </template>
       </TabsComponent>
     </div>
   </div>
@@ -13,12 +16,13 @@
 <script>
 import TabsComponent from '@/components/style-guide/TabsComponent'
 import AccessLots from '@/components/lots/AccessLots'
-
+import DoneLots from '@/components/lots/DoneLots'
 export default {
   name: 'ListLots',
   components: {
     TabsComponent,
-    AccessLots
+    AccessLots,
+    DoneLots
   },
   data () {
     return {
